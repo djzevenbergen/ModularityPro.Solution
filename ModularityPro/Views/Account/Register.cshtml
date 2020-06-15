@@ -1,0 +1,48 @@
+  
+@{
+  Layout = "_Layout";
+}
+
+@using ModularityPro.ViewModels
+@model RegisterViewModel
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="jumbotron">
+      <p class="lead">Already registered? @Html.ActionLink("Sign in here.", "Login", "Account")</p>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    @using (Html.BeginForm("Register", "Account", FormMethod.Post))
+    {
+      @Html.LabelFor(user => user.FirstName, new { @class = "form-label"})
+      @Html.TextBoxFor(user => user.FirstName, new { @class = "form-control"})
+
+      @Html.LabelFor(user => user.LastName, new { @class = "form-label"})
+      @Html.TextBoxFor(user => user.LastName, new { @class = "form-control"})
+
+      @Html.LabelFor(user => user.UserName, new { @class = "form-label"})
+      @Html.TextBoxFor(user => user.UserName, new { @class = "form-control"})
+
+      @Html.LabelFor(user => user.Email, new { @class = "form-label"})
+      @Html.TextBoxFor(user => user.Email, new { @class = "form-control"})
+
+      @Html.LabelFor(user => user.Password, new { @class = "form-label"})
+      @Html.PasswordFor(user => user.Password, new { @class = "form-control"})
+
+      @Html.LabelFor(user => user.ConfirmPassword, new { @class = "form-label"})
+      @Html.PasswordFor(user => user.ConfirmPassword, new { @class = "form-control"})
+      <br>
+      <input type="submit" value="Register" class="btn btn-primary"> 
+    }
+  </div>
+  <div class="col-md-6">
+    <h3>Join <span class="text-info">Modularity</span>Pro</h3>
+    <hr>
+    <p>Something something.</p>
+  </div>
+    
+
+</div>

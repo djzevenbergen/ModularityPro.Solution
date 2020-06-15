@@ -1,0 +1,16 @@
+@{
+  Layout = "_Layout";
+}
+
+@using ModularityPro.Models
+
+@foreach(ApplicationUser user in Model)
+{
+  <p>@Html.ActionLink($"{@user.UserName}", "Profile", "Home", new { name = user.UserName})</p>
+
+    @using (Html.BeginForm("AddFriend", "Home"))
+    {
+      @Html.Hidden("userName", @user.UserName)
+      <input type="submit" class="btn btn-primary" value="Add Friend">
+    }
+}

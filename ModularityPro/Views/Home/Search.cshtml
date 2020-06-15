@@ -1,0 +1,8 @@
+@{
+  Layout = "_Layout";
+}
+
+@foreach (ApplicationUser u in Model)
+{
+  <p>@u.FirstName @u.LastName</p>
+}

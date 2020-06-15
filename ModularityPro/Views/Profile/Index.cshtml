@@ -1,0 +1,60 @@
+@{
+  Layout = "_Layout";
+}
+@using ModularityPro.Models
+@* Hi @Model.UserName
+Your Email: @Model.Email
+<hr>
+<h3>Your Friends</h3>
+
+@foreach(Friend user in ViewBag.Friends)
+{
+  <p>@user.UserFriend</p>
+}
+
+@foreach(Post p in ViewBag.Posts)
+{
+  <p>@p.Content</p>
+} *@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="jumbotron">
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <h3>@Model.FirstName @Model.LastName</h3>
+    <table class="table">
+      <tr>
+        <th>Username</th>
+        <td>@Model.UserName</td>
+      </tr>
+      <tr>
+        <th>Email</th>
+        <td>@Model.Email</td>
+      </tr>
+    </table>
+
+    <h3>Friends</h3>
+    <div class="row">
+
+    <div class="card col-md-3">
+    Test
+    </div>
+        <div class="card col-md-3">
+        Test
+    </div>
+        <div class="card col-md-3">
+        Test
+    </div>
+            <div class="card col-md-3">
+        Test
+    </div>
+    </div>
+  </div>
+  <div class="col-md-6">
+    POSTS GO HERE?
+  </div>
+</div>
