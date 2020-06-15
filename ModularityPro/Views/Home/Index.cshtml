@@ -6,12 +6,12 @@
 
 @if(User.Identity.IsAuthenticated)
 {
-  <p>Welcome, @ViewBag.User.FirstName @ViewBag.User.LastName!</p>
+  <p>Welcome, @ViewBag.User.FirstName @ViewBag.User.LastName!<img src="@ViewBag.User.AvatarUrl" class="avatar"></p>
 }
 else
 {
 <div class="jumbotron">
-  <h1>Welcome to <span class="text-info">Modularity</span>Pro</h1>
+  <h1>Welcome to <span class="text-info">Modularity</span>Pro </h1>
   <hr>
   <p>A social network for developers.</p>
   <p class="lead">

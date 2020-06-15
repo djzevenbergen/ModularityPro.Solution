@@ -2,29 +2,10 @@
   Layout = "_Layout";
 }
 @using ModularityPro.Models
-@* Hi @Model.UserName
-Your Email: @Model.Email
-<hr>
-<h3>Your Friends</h3>
 
-@foreach(Friend user in ViewBag.Friends)
-{
-  <p>@user.UserFriend</p>
-}
-
-@foreach(Post p in ViewBag.Posts)
-{
-  <p>@p.Content</p>
-} *@
-
-<div class="row">
-  <div class="col-md-12">
-    <div class="jumbotron">
-    </div>
-  </div>
-</div>
 <div class="row">
   <div class="col-md-6">
+    <img src="@Model.AvatarUrl" class = "avatar">
     <h3>@Model.FirstName @Model.LastName</h3>
     <table class="table">
       <tr>
@@ -36,25 +17,71 @@ Your Email: @Model.Email
         <td>@Model.Email</td>
       </tr>
     </table>
+    <div>
+      <div class="profile-header-title">
+        <h3>About</h3>
+      </div>
+      <div class="profile-header-action">
+        @if(User.Identity.Name == @Model.UserName)
+        {
+          @Html.ActionLink("Edit", "Edit", "Profile", new { name = @Model.UserName}, new { @class = "btn btn-dark" })
+        }
+      </div>
+    </div>
+    <div class="profile-about">
+      <p>@Model.Bio</p>
+    </div>
 
     <h3>Friends</h3>
     <div class="row">
-
-    <div class="card col-md-3">
-    Test
-    </div>
-        <div class="card col-md-3">
+      <div class="card col-md-3">
         Test
-    </div>
-        <div class="card col-md-3">
+      </div>
+      <div class="card col-md-3">
         Test
-    </div>
-            <div class="card col-md-3">
+      </div>
+      <div class="card col-md-3">
         Test
-    </div>
+      </div>
     </div>
   </div>
   <div class="col-md-6">
-    POSTS GO HERE?
+    <div class="profile-post-header">
+      <div class="profile-header-title">
+        <h3>Posts</h3>
+      </div>
+      <div class="profile-header-action">
+        @if(User.Identity.Name == @Model.UserName)
+        {
+          <button class="btn btn-dark" id="new-post">New Post</button>
+        }
+      </div>
+      <div class="profile-post-content">
+        <div id="profile-create-post">
+          @using (Html.BeginForm("ProfilePost", "Posts", FormMethod.Post))
+          {
+            <input type="hidden" name="UserName" id="UserName" value="@User.Identity.Name">
+            <textarea id="Content" name="Content" class="profile-create-post-text"></textarea>
+            <input type="submit" class="btn btn-dark" value="Post">
+          }
+        </div>
+        <div class="profile-post-list">
+        @if(ViewBag.Posts.Count > 0)
+        {
+          @foreach(Post post in ViewBag.Posts)
+          {
+            <div class="card profile-post">
+              <div class="card-title">
+                @post.User.UserName
+              </div>
+              <div class="card-body">
+                @post.Content
+              </div>
+            </div>
+          }
+        }
+        </div>
+      </div>
+    </div>
   </div>
 </div>

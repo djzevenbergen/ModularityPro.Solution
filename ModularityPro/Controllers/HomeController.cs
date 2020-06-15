@@ -20,6 +20,7 @@ namespace ModularityPro.Controllers
 
     public HomeController(ModularityProContext db, UserManager<ApplicationUser> userManager)
     {
+      //   UserStateViewModel = new UserStateViewModel();
       _db = db;
       _userManager = userManager;
     }
@@ -76,7 +77,7 @@ namespace ModularityPro.Controllers
 
     [HttpGet("/search")]
 
-    public ActionResult Search(string search, string searchParam)
+    public ActionResult Search(string search) //, string searchParam
     {
 
       var model = from m in _db.Users select m;
@@ -85,25 +86,23 @@ namespace ModularityPro.Controllers
 
       if (!string.IsNullOrEmpty(search))
       {
-        if (searchParam == "First")
+        foreach (ApplicationUser user in model)
         {
-          model = model.Where(n => n.FirstName.Contains(search));
-
-        }
-        else
-        {
-          model = model.Where(n => n.LastName.Contains(search));
+          if (user.FirstName.ToLower().Contains(search) || user.LastName.ToLower().Contains(search))
+          {
+            matchesUser.Add(user);
+          }
         }
       }
-      else
-      {
-      }
-
-      matchesUser = model.ToList();
-
       return View(matchesUser);
     }
+    public ActionResult GetData()
+    {
 
+      string myName = User.FindFirstValue(ClaimTypes.Name);
+      ApplicationUser thisUser = _db.Users.Where(users => users.UserName == myName).FirstOrDefault();
+      return Content(thisUser.AvatarUrl); // Of whatever you need to return.
+    }
 
     [HttpGet]
     public ActionResult Test()

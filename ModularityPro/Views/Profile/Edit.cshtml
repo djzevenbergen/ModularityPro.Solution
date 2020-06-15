@@ -1,0 +1,73 @@
+@{
+  Layout = "_Layout";
+}
+@using ModularityPro.Models
+@* @model ApplicationUser *@
+@* Hi @Model.UserName
+Your Email: @Model.Email
+<hr>
+<h3>Your Friends</h3>
+
+@foreach(Friend user in ViewBag.Friends)
+{
+  <p>@user.UserFriend</p>
+}
+
+@foreach(Post p in ViewBag.Posts)
+{
+  <p>@p.Content</p>
+} *@
+
+@model ModularityPro.Models.ApplicationUser
+
+@if(User.Identity.Name == @Model.UserName)
+{
+  @using (Html.BeginForm())
+  {
+    <div class="row">
+      <div class="col-md-6">
+        <h3>@Html.EditorFor(user => user.FirstName, @Model.FirstName) @Html.EditorFor(user => user.LastName, @Model.LastName)</h3>
+        <table class="table">
+          <tr>
+            <th>Username</th>
+            <td>@Model.UserName</td>
+          </tr>
+          <tr>
+            <th>Email</th>
+            <td>@Html.EditorFor(user => user.Email, @Model.Email)</td>
+          </tr>
+        </table>
+        <div>
+          <div class="profile-header-title">
+            <h3>About</h3>
+          </div>
+          <div class="profile-header-action"> 
+          </div>
+        </div>
+        <div class="profile-about">
+            @Html.HiddenFor(user => user.Id, @Model.Id)
+            
+            @Html.EditorFor(user => user.Bio, @Model.Bio)
+        </div>
+        <div class="row">
+        <div class="col-md-12">
+            <input type="submit" value="Save" class="btn btn-dark">
+            </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div>
+          <div class="profile-header-title">
+            <h3>Posts</h3>
+          </div>
+          <div class="profile-header-action">
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+}
+else
+{
+  <p>You are not authorized to view this page.</p>
+}

@@ -29,9 +29,33 @@ namespace ModularityPro.Controllers
     {
       ViewBag.Friends = _db.Friends.Where(user => user.User.UserName == name).Include(user => user.UserFriend).ToList();
       ApplicationUser thisUser = _db.Users.Where(user => user.UserName == name).FirstOrDefault();
+      ViewBag.AvatarUrl = $"https://api.adorable.io/avatars/100/{thisUser.UserName}.png";
+      List<Post> userPosts = _db.Posts.Where(posts => posts.User.Id == thisUser.Id).ToList();
+      ViewBag.Posts = userPosts;
       return View(thisUser);
     }
 
+    [HttpGet("Profile/Edit/{name}")]
+    public ActionResult Edit(string name)
+    {
+      ViewBag.Friends = _db.Friends.Where(user => user.User.UserName == name).Include(user => user.UserFriend).ToList();
+      ApplicationUser thisUser = _db.Users.Where(user => user.UserName == name).FirstOrDefault();
+      ViewBag.AvatarUrl = $"https://api.adorable.io/avatars/100/{thisUser.UserName}.png";
+      return View(thisUser);
+    }
+
+    [HttpPost("Profile/Edit/{name}")]
+    public ActionResult Edit(ApplicationUser user)
+    {
+      ApplicationUser thisUser = _db.Users.Where(users => users.Id == user.Id).FirstOrDefault();
+      thisUser.Bio = user.Bio;
+      thisUser.FirstName = user.FirstName;
+      thisUser.LastName = user.LastName;
+      thisUser.Email = user.Email;
+      _db.Entry(thisUser).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index", "Profile"); // not sure how it knows the user ID #blackmagic
+    }
   }
 
 }
