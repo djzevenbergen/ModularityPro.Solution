@@ -66,20 +66,20 @@
           }
         </div>
         <div class="profile-post-list">
-        @if(ViewBag.Posts.Count > 0)
-        {
-          @foreach(Post post in ViewBag.Posts)
+          @if(ViewBag.Posts.Count > 0)
           {
-            <div class="card profile-post">
-              <div class="card-title">
-                @post.User.UserName
+            @foreach(Post post in ViewBag.Posts)
+            {
+              <div class="card profile-post">
+                <div class="card-title">
+                  @post.User.UserName
+                </div>
+                <div class="card-body">
+                  @post.Content
+                </div>
               </div>
-              <div class="card-body">
-                @post.Content
-              </div>
-            </div>
+            }
           }
-        }
         </div>
       </div>
     </div>

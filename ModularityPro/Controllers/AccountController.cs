@@ -72,9 +72,9 @@ namespace ModularityPro.Controllers
       // var identity = (ClaimsIdentity)User.Identity;
       // IEnumerable<Claim> claims = identity.Claims;
       // claims.Add()
-      var identity = (ClaimsPrincipal)User.Identity;
-      var claims = identity.Claims;
-      identity.AddClaim(new Claim(ClaimTypes()))
+      // var identity = (ClaimsIdentity)User.Identity;
+      // IEnumerable<Claim> claims = identity.Claims;
+      // identity.AddClaim(new Claim("AvatarUrl", $"https://api.adorable.io/avatars/100/{model.UserName}.png"));
 
       if (result.Succeeded)
       {

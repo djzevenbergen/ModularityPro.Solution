@@ -23,6 +23,7 @@ html {
   border: solid 4px black; 
   width: 50px;
   height: 50px;
+  float: left;
 }
 .btn{
   text-shadow: 0px 0px 12px rgb(218, 255, 209), 0px 0px 12px #fff;
