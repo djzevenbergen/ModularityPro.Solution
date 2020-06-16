@@ -31,7 +31,11 @@ else{
                 @Html.ActionLink($"{u.FirstName} {u.LastName}", "Index", "Profile", new {name = u.UserName})
               </strong>
               <hr>
-              @if(u.Bio != null)
+
+              @if(u.Bio != null){
+
+              @if(u.Bio.Length > 100)
+
               {
                 @if(u.Bio.Length > 100)
                 {
@@ -42,6 +46,7 @@ else{
                 {
                   @u.Bio
                 }
+              }
               }
             </div>
             <div class="card-icon">

@@ -48,5 +48,6 @@ namespace ModularityPro.Hubs
       ApplicationUser fromUser = await _db.Users.Where(users => users.UserName == fromUserName).FirstOrDefaultAsync();
       await Clients.User(toUser.Id).SendAsync("ReceiveFriendRequest", $"{fromUser.FirstName} {fromUser.LastName}");
     }
+
   }
 }
