@@ -32,7 +32,11 @@ else{
               </strong>
               <hr>
 
-              @if(u.Bio != null)
+
+
+              @if(u.Bio != null){
+
+              @if(u.Bio.Length > 100)
 
               {
                 @if(u.Bio.Length > 100)
