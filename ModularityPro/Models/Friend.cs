@@ -7,5 +7,11 @@ namespace ModularityPro.Models
     public ApplicationUser UserFriend { get; set; }
     public bool Responded { get; set; }
     public bool Accepted { get; set; }
+
+    public Friend()
+    {
+      Responded = false;
+      Accepted = false;
+    }
   }
 }

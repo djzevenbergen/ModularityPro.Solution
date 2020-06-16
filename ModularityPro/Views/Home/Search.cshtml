@@ -31,21 +31,26 @@ else{
                 @Html.ActionLink($"{u.FirstName} {u.LastName}", "Index", "Profile", new {name = u.UserName})
               </strong>
               <hr>
-              @if(u.Bio != null){
 
-              @if(u.Bio.Length > 100)
+              @if(u.Bio != null)
+
               {
-                @u.Bio.Substring(0, 100)
-                <text>...</text>
-              }
-              else
-              {
-                @u.Bio
+                @if(u.Bio.Length > 100)
+                {
+                  @u.Bio.Substring(0, 100)
+                  <text>...</text>
+                }
+                else
+                {
+                  @u.Bio
+                }
               }
               }
             </div>
             <div class="card-icon">
-              <img src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
+            <a href="@Url.Action("AddFriend", "Friends")" id="send-friend-request-values", new {userName = @u.UserName} value="@u.UserName,@User.Identity.Name">
+              <img id="send-friend-request" src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
+            </a>
             </div>
           </div>
         </div>
