@@ -11,6 +11,9 @@ using System.Linq;
 using System.Web;
 using System.Security.Principal;
 using Microsoft.AspNetCore.Session;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Caching.Memory;
+
 
 namespace ModularityPro.Controllers
 {
@@ -19,13 +22,15 @@ namespace ModularityPro.Controllers
     private readonly ModularityProContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    private IMemoryCache _cache;
     //private readonly ISession session;
 
-    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ModularityProContext db)
+    public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ModularityProContext db, IMemoryCache memoryCache)
     {
       _userManager = userManager;
       _signInManager = signInManager;
       _db = db;
+      _cache = memoryCache;
     }
 
     public ActionResult Register()
@@ -39,18 +44,6 @@ namespace ModularityPro.Controllers
       string url = $"https://api.adorable.io/avatars/100/{model.UserName}.png";
       ApplicationUser user = new ApplicationUser { UserName = model.UserName, Email = model.Email, FirstName = model.FirstName, LastName = model.LastName, AvatarUrl = url };
       IdentityResult result = await _userManager.CreateAsync(user, model.Password);
-
-      // var userWithClaims = (ClaimsPrincipal)User;
-      // var avatar = userWithClaims.Claims.First(c => c.Type == "AvatarUrl");
-
-      // ClaimsPrincipal principal = HttpContext.Current.User as ClaimsPrincipal;
-      // if (null != principal)
-      // {
-      //   foreach (Claim claim in principal.Claims)
-      //   {
-      //     Response.Write("CLAIM TYPE: " + claim.Type + "; CLAIM VALUE: " + claim.Value + "</br>");
-      //   }
-      // }
 
       if (result.Succeeded)
       {
@@ -70,28 +63,30 @@ namespace ModularityPro.Controllers
     [HttpPost]
     public async Task<ActionResult> Login(LoginViewModel model)
     {
+
+      List<string> uIds = new List<string> { };
+
+
+
       Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager
           .PasswordSignInAsync(model.UserName, model.Password, isPersistent: true, lockoutOnFailure: false);
 
-      // var identity = (ClaimsIdentity)User.Identity;
-      // IEnumerable<Claim> claims = identity.Claims;
-      // claims.Add()
-      // var identity = (ClaimsIdentity)User.Identity;
-      // IEnumerable<Claim> claims = identity.Claims;
-      // identity.AddClaim(new Claim("AvatarUrl", $"https://api.adorable.io/avatars/100/{model.UserName}.png"));
-
       if (result.Succeeded)
       {
-        //HttpContext.Session("AvatarUrl", $"https://api.adorable.io/avatars/100/{model.UserName}.png");
-        byte[] bytes = Encoding.ASCII.GetBytes(model.UserName);
-        HttpContext.Session.Set("AvatarUrl", bytes);
-        //HttpContext.Session.
+        var listLog = _cache.Get("list");
+
+
+        // listLog.Add(User.Identity.Name);
+
+        // _cache.Set("list", result);
+
         return RedirectToAction("Index", "Home");
       }
       else
       {
         return View();
       }
+
     }
 
     [HttpPost]

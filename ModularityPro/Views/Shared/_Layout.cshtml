@@ -6,7 +6,6 @@
     var layoutUser = await userManager.GetUserAsync(User);
 }
 
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -33,7 +32,7 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3 sticky-top">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index"><div class="glitch is-glitching" data-text="ModularityPro">ModularityPro</div></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
@@ -91,9 +90,48 @@
             </div>
         </nav>
     </header>
-    <div class="container">
+    <div class="container notNav">
         <partial name="_CookieConsentPartial" />
         <main role="main" class="pb-3">
+            <div class="chat-sidebar">
+            <div class="sidebar-name">
+                <!-- Pass username and display name to register popup -->
+                <a href="javascript:register_popup('narayan-prusty', 'Narayan Prusty');">
+                    <img width="30" height="30" src="https://api.adorable.io/avatars/100/TEST.png" />
+                    <span>Narayan Prusty</span>
+                </a>
+            </div>
+            <div class="sidebar-name">
+                <a href="javascript:register_popup('qnimate', 'QNimate');">
+                    <img width="30" height="30" src="https://api.adorable.io/avatars/100/TEST.png" />
+                    <span>QNimate</span>
+                </a>
+            </div>
+            <div class="sidebar-name">
+                <a href="javascript:register_popup('qscutter', 'QScutter');">
+                    <img width="30" height="30" src="https://api.adorable.io/avatars/100/TEST.png" />
+                    <span>QScutter</span>
+                </a>
+            </div>
+            <div class="sidebar-name">
+                <a href="javascript:register_popup('qidea', 'QIdea');">
+                    <img width="30" height="30" src="https://api.adorable.io/avatars/100/TEST.png" />
+                    <span>QIdea</span>
+                </a>
+            </div>
+            <div class="sidebar-name">
+                <a href="javascript:register_popup('qazy', 'QAzy');">
+                    <img width="30" height="30" src="https://api.adorable.io/avatars/100/TEST.png" />
+                    <span>QAzy</span>
+                </a>
+            </div>
+            <div class="sidebar-name">
+                <a href="javascript:register_popup('qblock', 'QBlock');">
+                    <img width="30" height="30" src="https://api.adorable.io/avatars/100/TEST.png" />
+                    <span>QBlock</span>
+                </a>
+            </div>
+        </div>
             @RenderBody()
         </main>
     </div>
