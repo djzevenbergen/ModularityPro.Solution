@@ -21,5 +21,10 @@ namespace ModularityPro.Hubs
       await Clients.User(toUserId).SendAsync("ReceiveMessage", fromUserName, message);
     }
 
+    // public async override Task OnConnected()
+    // {
+
+    // }
+
   }
 }
