@@ -57,5 +57,4 @@ namespace ModularityPro.Controllers
       return RedirectToAction("Index", "Profile"); // not sure how it knows the user ID #blackmagic
     }
   }
-
 }
