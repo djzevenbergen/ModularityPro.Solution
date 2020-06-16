@@ -1,6 +1,9 @@
 ﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
+//==================================================================================================
+// import $ from '.././lib/jquery/dist/jquery.js';
+// $ = require('.././lib/jquery/dist/jquery.js');
 // Write your JavaScript code.
 $(document).ready(function () {
   $("#new-post").click(function () {
@@ -10,6 +13,65 @@ $(document).ready(function () {
       $("#profile-create-post").slideDown();
     }
   });
+
+  "use strict";
+
+  const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
+  //Disable send button until connection is established
+  // document.getElementById("sendButton").disabled = true;
+  var countie = 0;
+  connection.on("ReceiveFriendRequest", function (user) {
+    // $("#friend-request-header").css("color", "red !important");
+    countie += 1;
+    alert("You received a friend request from " + user + countie);
+  });
+
+  // connection.on("ReceiveMessage", function (user, message) {
+  //   var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  //   var encodedMsg = user + " says " + msg;
+  //   var li = document.createElement("li");
+  //   li.textContent = encodedMsg;
+  //   document.getElementById("messagesList").appendChild(li);
+  // });
+
+  connection.start();
+  // connection.start().then(function () {
+  //   document.getElementById("sendButton").disabled = false;
+  // }).catch(function (err) {
+  //   return console.error(err.toString());
+  // });
+
+  // document.getElementById("sendButton").addEventListener("click", function (event) {
+  //   var fromUser = document.getElementById("userInput").value;
+  //   var message = document.getElementById("messageInput").value;
+  //   var toUser = document.getElementById("sendToUser").value;
+
+
+  //   // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  //   var encodedMsg = fromUser + " says " + message;
+  //   var li = document.createElement("li");
+  //   li.textContent = encodedMsg;
+  //   document.getElementById("messagesList").appendChild(li);
+
+
+
+  //   connection.invoke("SendPrivateMessage", toUser, fromUser, message).catch(function (err) {
+  //     return console.error(err.toString());
+  //   });
+  //   event.preventDefault();
+  // });
+
+
+  $("#send-friend-request").off("click").on("click", function () {
+    var rawInput = $("#send-friend-request-values").attr("value");
+    var userNames = rawInput.split(",");
+    alert("Sending friend request...");
+
+    connection.invoke("NotifyFriendRequest", userNames[0], userNames[1]);
+  });
+
+
 });
 
 // POPUP STUFFS

@@ -5,12 +5,20 @@
 
 <div class="row">
   <div class="col-md-6">
-    <img src="@Model.AvatarUrl" class = "avatar">
+
+          <img src="@Model.AvatarUrl" class = "avatar">
     <h3>@Model.FirstName @Model.LastName</h3>
     <table class="table">
       <tr>
         <th>Username</th>
-        <td>@Model.UserName</td>
+        <td>
+          @Model.UserName
+          <div class="profile-header-action">
+            <a href="" id="send-friend-request-values" onclick="@Url.Action("AddFriend", "Friends", new {userName = @Model.UserName})" value="@Model.UserName,@User.Identity.Name">
+              <img id="send-friend-request" src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
+            </a>
+          </div>
+        </td>
       </tr>
       <tr>
         <th>Email</th>

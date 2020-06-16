@@ -21,5 +21,11 @@ namespace ModularityPro.Hubs
       await Clients.User(toUserId).SendAsync("ReceiveMessage", fromUserName, message);
     }
 
+    public async Task NotifyFriendRequest(string toUserName, string fromUserName)
+    {
+      ApplicationUser toUser = await _db.Users.Where(users => users.UserName == toUserName).FirstOrDefaultAsync();
+      ApplicationUser fromUser = await _db.Users.Where(users => users.UserName == fromUserName).FirstOrDefaultAsync();
+      await Clients.User(toUser.Id).SendAsync("ReceiveFriendRequest", $"{fromUser.FirstName} {fromUser.LastName}");
+    }
   }
 }

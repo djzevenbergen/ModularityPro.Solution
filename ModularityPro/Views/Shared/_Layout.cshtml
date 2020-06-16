@@ -25,9 +25,11 @@
               crossorigin="anonymous"
               integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"/>
     </environment>
-    <link rel="stylesheet" href="~/lib/jquery/dist/jquery.js">
+    @* <link rel="stylesheet" href="~/lib/jquery/dist/jquery.js"> *@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="~/css/site.css" />
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
     <script src="~/js/site.js"></script>
 </head>
 <body>
@@ -47,7 +49,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> Friends</a>
                         </li>
-                        <li class="nav-item">
+                        <li class="nav-item" id ="friend-request-header">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="Requests"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Requests</a>
                         </li>
                     </ul>
