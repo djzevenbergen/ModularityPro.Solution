@@ -94,14 +94,19 @@ namespace ModularityPro.Controllers
           }
         }
       }
+      else
+      {
+        matchesUser = model.ToList();
+      }
+      ViewBag.SearchString = search;
       return View(matchesUser);
     }
-    public ActionResult GetData()
-    {
 
+    public string GetData()
+    {
       string myName = User.FindFirstValue(ClaimTypes.Name);
       ApplicationUser thisUser = _db.Users.Where(users => users.UserName == myName).FirstOrDefault();
-      return Content(thisUser.AvatarUrl); // Of whatever you need to return.
+      return thisUser.AvatarUrl;
     }
 
     [HttpGet]

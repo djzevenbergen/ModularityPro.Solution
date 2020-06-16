@@ -7,6 +7,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using ModularityPro.Models;
 using ModularityPro.Hubs;
+using Microsoft.AspNetCore.Session;
+using System.Runtime;
 
 namespace ModularityPro
 {
@@ -46,6 +48,9 @@ namespace ModularityPro
       });
 
       services.AddSignalR();
+
+      services.AddDistributedMemoryCache();
+      services.AddSession();
     }
 
     public void Configure(IApplicationBuilder app)
@@ -55,6 +60,8 @@ namespace ModularityPro
       app.UseDeveloperExceptionPage();
 
       app.UseAuthentication();
+
+      app.UseSession();
 
       app.UseMvc(routes =>
       {

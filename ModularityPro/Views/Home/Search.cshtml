@@ -9,6 +9,16 @@
   <p>No users match this search.</p>
 }
 else{
+  <div class="row search-header">
+    @if(ViewBag.SearchString != null)
+    {
+      <h3>Search results for "@ViewBag.SearchString"</h3>
+    }
+    else
+    {
+      <h3>Showing all results</h3>
+    }
+  </div>
   @foreach (ApplicationUser u in Model)
   {
     <div class="row">

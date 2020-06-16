@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using ModularityPro.ViewModels;
 using ModularityPro.Models;
+using System.Text;
+using System.ServiceModel;
 using System.Security.Claims;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Security.Principal;
+using Microsoft.AspNetCore.Session;
 
 namespace ModularityPro.Controllers
 {
@@ -16,6 +19,7 @@ namespace ModularityPro.Controllers
     private readonly ModularityProContext _db;
     private readonly UserManager<ApplicationUser> _userManager;
     private readonly SignInManager<ApplicationUser> _signInManager;
+    //private readonly ISession session;
 
     public AccountController(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager, ModularityProContext db)
     {
@@ -78,6 +82,10 @@ namespace ModularityPro.Controllers
 
       if (result.Succeeded)
       {
+        //HttpContext.Session("AvatarUrl", $"https://api.adorable.io/avatars/100/{model.UserName}.png");
+        byte[] bytes = Encoding.ASCII.GetBytes(model.UserName);
+        HttpContext.Session.Set("AvatarUrl", bytes);
+        //HttpContext.Session.
         return RedirectToAction("Index", "Home");
       }
       else
