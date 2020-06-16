@@ -24,6 +24,7 @@ html {
   width: 50px;
   height: 50px;
   float: left;
+  margin: 5px;
 }
 .btn{
   text-shadow: 0px 0px 12px rgb(218, 255, 209), 0px 0px 12px #fff;
@@ -78,7 +79,21 @@ textarea {
   resize: none;
 }
 
+.home-post-form {
+  width: 50%;
+  margin: 0 auto;
+}
+.home-post-avatar {
+  margin: 0 auto;
+}
+
+.home-post-container {
+  margin: 0 auto;
+}
+
 .card-content {
+  padding-left: 10px;
+  width: 80%;
   float: left;
 }
 

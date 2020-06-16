@@ -15,9 +15,21 @@ else{
       <div class="col-md-12">
         <div class="card">
           <div class="card-body">
+            <img src = "@u.AvatarUrl" class="avatar">
             <div class="card-content">
-              <img src = "@u.AvatarUrl" class="avatar">
-              @Html.ActionLink($"{u.FirstName} {u.LastName}", "Index", "Profile", new {name = u.UserName})
+              <strong>
+                @Html.ActionLink($"{u.FirstName} {u.LastName}", "Index", "Profile", new {name = u.UserName})
+              </strong>
+              <hr>
+              @if(u.Bio.Length > 100)
+              {
+                @u.Bio.Substring(0, 100)
+                <text>...</text>
+              }
+              else
+              {
+                @u.Bio
+              }
             </div>
             <div class="card-icon">
               <img src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
