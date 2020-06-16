@@ -31,6 +31,8 @@ else{
                 @Html.ActionLink($"{u.FirstName} {u.LastName}", "Index", "Profile", new {name = u.UserName})
               </strong>
               <hr>
+              @if(u.Bio != null){
+
               @if(u.Bio.Length > 100)
               {
                 @u.Bio.Substring(0, 100)
@@ -39,6 +41,7 @@ else{
               else
               {
                 @u.Bio
+              }
               }
             </div>
             <div class="card-icon">
