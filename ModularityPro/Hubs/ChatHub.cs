@@ -21,17 +21,5 @@ namespace ModularityPro.Hubs
       await Clients.User(toUserId).SendAsync("ReceiveMessage", fromUserName, message);
     }
 
-    // :
-    // public override Task OnConnected()
-    // {
-    //   var id = Context.ConnectionId;
-    //   var agent = Context.Request.Headers["user-agent"] ?? String.Empty;
-
-    //   // Do something with the connection ID and user agent information
-    //  :
-
-    //   return base.OnConnected();
-
-
   }
 }
