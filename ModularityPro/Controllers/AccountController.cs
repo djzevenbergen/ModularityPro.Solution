@@ -75,9 +75,8 @@ namespace ModularityPro.Controllers
       {
         var listLog = _cache.Get("list");
 
-
+        // Console.WriteLine(listLog.GetType());
         // listLog.Add(User.Identity.Name);
-
         // _cache.Set("list", result);
 
         return RedirectToAction("Index", "Home");
@@ -86,7 +85,6 @@ namespace ModularityPro.Controllers
       {
         return View();
       }
-
     }
 
     [HttpPost]
