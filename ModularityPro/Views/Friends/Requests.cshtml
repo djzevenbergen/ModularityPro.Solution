@@ -1,3 +1,69 @@
 @{
   Layout = "_Layout";
 }
+@using ModularityPro.Models
+<H3>Received Requests</H3>
+@if(@ViewBag.ReceivedFriendRequests != null && ViewBag.ReceivedFriendRequests.Count > 0)
+{ 
+  @foreach(Friend request in ViewBag.ReceivedFriendRequests)
+  {
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <img src = "@request.User.AvatarUrl" class="avatar">
+            <div class="card-content">
+              <strong>
+                @Html.ActionLink($"{request.User.FirstName} {request.User.LastName}", "Index", "Profile", new {name = request.User})
+              </strong>
+              <hr>
+              @Html.ActionLink("Accept", "ConfirmFriend", "Friends", new { userName = request.User.UserName}, new { @class = "btn btn-primary"})
+              @Html.ActionLink("Delete", "DenyFriend", "Friends", new { userName = request.User.UserName}, new { @class = "btn btn-dark"})
+            </div>
+            <div class="card-icon">
+              @* <a href="@Url.Action("AddFriend", "Friends")" id="send-friend-request-values", new {userName = request.UserFriend} value="@u.UserName,@User.Identity.Name">
+                <img id="send-friend-request" src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
+              </a> *@
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+}
+else{
+  <p> There are no new requests at this time.</p>
+}
+
+<H3>Sent Requests</H3>
+@if(@ViewBag.SentFriendRequests != null && ViewBag.SentFriendRequests.Count > 0)
+{
+  @foreach(Friend request in ViewBag.SentFriendRequests)
+  {
+    ApplicationUser thisUser = request.UserFriend;
+    <div class="row">
+      <div class="col-md-12">
+        <div class="card">
+          <div class="card-body">
+            <img src = "@request.UserFriend.AvatarUrl" class="avatar">
+            <div class="card-content">
+              <strong>
+                @Html.ActionLink($"{request.UserFriend.FirstName} {request.UserFriend.LastName}", "Index", "Profile", new {name = request.UserFriend})
+              </strong>
+              <hr>
+              <strong>Status: </strong> Pending.
+            </div>
+            <div class="card-icon">
+              @* <a href="@Url.Action("AddFriend", "Friends")" id="send-friend-request-values", new {userName = request.UserFriend} value="@u.UserName,@User.Identity.Name">
+                <img id="send-friend-request" src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
+              </a> *@
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+}
+else{
+  <p>You have no pending requests.</p>
+}

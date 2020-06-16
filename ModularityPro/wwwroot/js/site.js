@@ -14,18 +14,39 @@ $(document).ready(function () {
     }
   });
 
+  function setHasNewRequestsDefault(fn, context) {
+    var result;
+
+    return function () {
+      if (fn) {
+        result = fn.apply(context || this, arguments);
+        fn = null;
+      }
+
+      return false;
+    }
+  }
+
+  var hasNewRequests = setHasNewRequestsDefault();
+
+  function viewFriendRequests() {
+    hasNewRequests = false;
+  }
+
+  if (hasNewRequests === true) {
+    $("#friend-request-header").css("color", "red");
+  } else {
+    $("#friend-request-header").css("color", "black");
+  }
+
   "use strict";
 
   const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
 
   //Disable send button until connection is established
   // document.getElementById("sendButton").disabled = true;
-  var countie = 0;
   connection.on("ReceiveFriendRequest", function (user) {
-    var user = user.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-    // $("#friend-request-header").css("color", "red !important");
-    countie += 1;
-    alert("You received a friend request from " + user + countie);
+    hasNewRequests = true;
   });
 
   // connection.on("ReceiveMessage", function (user, message) {
@@ -69,7 +90,6 @@ $(document).ready(function () {
   $("#send-friend-request").off("click").on("click", function () {
     var rawInput = $("#send-friend-request-values").attr("value");
     var userNames = rawInput.split(",");
-    alert("Sending friend request...");
     connection.invoke("NotifyFriendRequest", userNames[0], userNames[1]).catch(function (err) {
       return console.error(err.toString());
     });
