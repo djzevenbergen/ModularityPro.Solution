@@ -44,13 +44,10 @@ else{
                 }
               }
             </div>
-            @* <div class="card-icon">
-            <a href=""  id="send-friend-request" onclick="@Url.Action("AddFriend", "Friends", new {userName = u.UserName})" value="@u.UserName, @User.Identity.Name">
-              <img src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
-            </a>
-          </div> *@
             <div class="card-icon">
-              <img src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
+            <a href="@Url.Action("AddFriend", "Friends")" id="send-friend-request-values", new {userName = @u.UserName} value="@u.UserName,@User.Identity.Name">
+              <img id="send-friend-request" src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
+            </a>
             </div>
           </div>
         </div>

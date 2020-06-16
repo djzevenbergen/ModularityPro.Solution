@@ -22,6 +22,7 @@ $(document).ready(function () {
   // document.getElementById("sendButton").disabled = true;
   var countie = 0;
   connection.on("ReceiveFriendRequest", function (user) {
+    var user = user.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
     // $("#friend-request-header").css("color", "red !important");
     countie += 1;
     alert("You received a friend request from " + user + countie);
@@ -34,8 +35,6 @@ $(document).ready(function () {
   //   li.textContent = encodedMsg;
   //   document.getElementById("messagesList").appendChild(li);
   // });
-
-  connection.start();
   // connection.start().then(function () {
   //   document.getElementById("sendButton").disabled = false;
   // }).catch(function (err) {
@@ -62,14 +61,20 @@ $(document).ready(function () {
   //   event.preventDefault();
   // });
 
+  connection.start().then(function () {
+  }).catch(function (err) {
+    return console.error(err.toString());
+  });
 
   $("#send-friend-request").off("click").on("click", function () {
     var rawInput = $("#send-friend-request-values").attr("value");
     var userNames = rawInput.split(",");
     alert("Sending friend request...");
-
-    connection.invoke("NotifyFriendRequest", userNames[0], userNames[1]);
+    connection.invoke("NotifyFriendRequest", userNames[0], userNames[1]).catch(function (err) {
+      return console.error(err.toString());
+    });
   });
+
 
 
 });
