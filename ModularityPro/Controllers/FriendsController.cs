@@ -22,6 +22,11 @@ namespace ModularityPro.Controllers
       _db = db;
     }
 
+    public ActionResult Requests()
+    {
+      return View();
+    }
+
     [HttpPost]
     public ActionResult AddFriend(string userName)
     {
