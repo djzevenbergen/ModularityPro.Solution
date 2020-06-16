@@ -6,11 +6,9 @@ for details on configuring this project to bundle and minify static web assets. 
 } */
 
 a.navbar-brand {
-  white-space: normal;
+  white-space: nowrap;
   text-align: center;
-  word-break: break-all;
 }
-
 .navbar {
   top: 0;
   position: fixed;
@@ -20,7 +18,6 @@ a.navbar-brand {
 .notNav {
   padding-top: 5%;
 }
-
 
 /* Sticky footer styles
 -------------------------------------------------- */
@@ -132,7 +129,10 @@ textarea {
 }
 
 .logout-button {
-  margin-left: 10px;
+  margin-right: 10px;
+  text-align: center;
+  display: inline-block;
+  font-size: small;
 }
 
 .border-top {
@@ -468,6 +468,14 @@ main {
   background: #6649b8;
 }
 
+.top-align {
+  display:flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+}
+
 .sidebar {
   position: fixed;
   background-color: var(--bg-primary);
@@ -562,6 +570,25 @@ main {
 
 /* Small screens */
 @media only screen and (max-width: 600px) {
+  
+  .top-align {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+  }
+
+  main{
+    margin: 0;
+    padding-top: 30%;
+    text-align: center;
+  }
+
+  body{
+    margin: 0;
+  }
+  
   .sidebar {
     bottom: 0 !important;
     width: 100vw !important;
@@ -579,6 +606,7 @@ main {
   .sidebar-nav-link {
     justify-content: center !important;
   }
+
 }
 
 /* Large screens */
@@ -605,6 +633,14 @@ main {
   .sidebar:hover .logo-text
   {
     left: 0px;
+  }
+
+  .top-align {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    flex-wrap: nowrap;
   }
 }
 

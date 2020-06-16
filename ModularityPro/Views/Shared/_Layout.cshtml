@@ -49,35 +49,22 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> Friends</a>
                         </li>
-                        <li class="nav-item" id ="friend-request-header">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="Requests"><i class="fa fa-user-circle-o" aria-hidden="true"></i> Requests</a>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="Requests" onclick="viewFriendRequests()"><i class="fa fa-user-circle-o" aria-hidden="true"></i> <span id ="friend-request-header">Requests</span></span></a>
                         </li>
                     </ul>
                 </div>
-
-                @if(User.Identity.IsAuthenticated)
-                {
+                <div class="top-align">
+                    @if(User.Identity.IsAuthenticated)
+                    {
+                    
                     <div>
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                
-                                @* <img src = "@User.Identity.AvatarUrl"> *@
-                                                                
                                 <a class="nav-link text-dark" asp-controller="Profile" asp-action="@User.Identity.Name"><i> <img src = "@layoutUser.AvatarUrl" class="avatar-by-search"> </i> @User.Identity.Name</a>
                             </li>
-                            <li class="nav-item">
                         </ul>
                     </div>
-                }
-                <div>
-                <form class="search" action="/search" method="get">
-                    <input type ="text" placeholder="   Search" name="search">
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                </form>
-                </div>
-
-                @if(User.Identity.IsAuthenticated)
-                {
                     <div>
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
@@ -86,9 +73,23 @@
                                 <input type="submit" class="btn btn-outline-danger logout-button" value="Log Out">
                             }
                             </li>
+                        </ul>       
+                    </div>
+                    
+                    }
+                    
+                    <div>
+                        <ul class="navbar-nav flex-grow-1">
+                            <li class="nav-item">
+                                <form class="search" action="/search" method="get">
+                                    <input type ="text" placeholder="   Search" name="search">
+                                    <button type="submit"><i class="fa fa-search"></i></button>
+                                </form>
+                            </li>
                         </ul>
                     </div>
-                }
+                    
+                </div>
             </div>
         </nav>
     </header>

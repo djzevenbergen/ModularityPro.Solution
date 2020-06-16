@@ -79,7 +79,7 @@ namespace ModularityPro.Controllers
 
     public ActionResult Search(string search) //, string searchParam
     {
-
+      var myUserName = User.FindFirstValue(ClaimTypes.Name);
       var model = from m in _db.Users select m;
 
       List<ApplicationUser> matchesUser = new List<ApplicationUser> { };
@@ -88,7 +88,7 @@ namespace ModularityPro.Controllers
       {
         foreach (ApplicationUser user in model)
         {
-          if (user.FirstName.ToLower().Contains(search) || user.LastName.ToLower().Contains(search))
+          if ((user.FirstName.ToLower().Contains(search) || user.LastName.ToLower().Contains(search)) && user.UserName != myUserName)
           {
             matchesUser.Add(user);
           }
@@ -96,7 +96,8 @@ namespace ModularityPro.Controllers
       }
       else
       {
-        matchesUser = model.ToList();
+        var usersMinus = model.Where(m => m.UserName != myUserName);
+        matchesUser = usersMinus.ToList();
       }
       ViewBag.SearchString = search;
       return View(matchesUser);
@@ -116,3 +117,6 @@ namespace ModularityPro.Controllers
     }
   }
 }
+
+
+
