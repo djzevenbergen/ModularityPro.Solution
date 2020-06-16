@@ -71,11 +71,14 @@
             @foreach(Post post in ViewBag.Posts)
             {
               <div class="card profile-post">
-                <div class="card-title">
-                  @post.User.UserName
-                </div>
                 <div class="card-body">
-                  @post.Content
+                  <img src="@post.User.AvatarUrl" class="avatar">
+                  <div class="card-content">
+                    <strong>
+                      @Html.ActionLink($"{@post.User.FirstName} {@post.User.LastName}", "Index", "Profile", new {name = @post.User.UserName})
+                    </strong>
+                    <p>@post.Content</p>
+                  </div>
                 </div>
               </div>
             }

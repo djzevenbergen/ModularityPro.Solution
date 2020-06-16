@@ -30,7 +30,7 @@ namespace ModularityPro.Controllers
       ViewBag.Friends = _db.Friends.Where(user => user.User.UserName == name).Include(user => user.UserFriend).ToList();
       ApplicationUser thisUser = _db.Users.Where(user => user.UserName == name).FirstOrDefault();
       ViewBag.AvatarUrl = $"https://api.adorable.io/avatars/100/{thisUser.UserName}.png";
-      List<Post> userPosts = _db.Posts.Where(posts => posts.User.Id == thisUser.Id).ToList();
+      List<Post> userPosts = _db.Posts.Where(posts => posts.User.Id == thisUser.Id).OrderByDescending(posts => posts.PostId).ToList();
       ViewBag.Posts = userPosts;
       return View(thisUser);
     }

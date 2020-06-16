@@ -31,7 +31,7 @@ namespace ModularityPro.Controllers
       newPost.User = postUser;
       _db.Posts.Add(newPost);
       _db.SaveChanges();
-      return RedirectToAction("Index", "Profile");
+      return RedirectToAction("Index", "Profile", new { name = postUser.UserName });
     }
 
     [HttpPost]
