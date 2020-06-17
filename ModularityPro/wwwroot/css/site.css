@@ -874,3 +874,9 @@ video {
   font-size: 16px;
   color: rgba(0, 0, 0, 0.5);
 }
+
+.video-chat-invite-area {
+  padding: 10px;
+  text-align: center;
+}
+/* =============================================================*/
