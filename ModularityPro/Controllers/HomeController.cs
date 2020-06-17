@@ -137,9 +137,11 @@ namespace ModularityPro.Controllers
       return View();
     }
 
-    [HttpGet]
+    [HttpGet("/Video")]
     public ActionResult Video()
     {
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return View();
     }
 

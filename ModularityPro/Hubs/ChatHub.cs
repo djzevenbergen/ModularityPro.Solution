@@ -59,5 +59,12 @@ namespace ModularityPro.Hubs
       await Clients.All.SendAsync("AddToChat", userRealName, userName, avatarUrl);
     }
 
+    public async Task SendVideoInvite(string toUserName, string fromUserName, string VideoUrl)
+    {
+      ApplicationUser toUser = _db.Users.Where(users => users.Id == toUserName).FirstOrDefault();
+      ApplicationUser fromUser = _db.Users.Where(users => users.UserName == fromUserName).FirstOrDefault();
+      await Clients.User(toUser.Id).SendAsync("ReceiveVideoInvite", $"{fromUser.FirstName} {fromUser.LastName}", VideoUrl);
+    }
+
   }
 }

@@ -157,6 +157,10 @@ $(document).ready(function () {
     }
   });
 
+  connection.on("ReceiveVideoInvite", (fromUser, inviteUrl) => {
+    alertboxPersistent.show("You received a video call invite from " + fromUser + ": " + inviteUrl);
+  });
+
   // connection.on("ReceiveMessage", function (user, message) {
   //   var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   //   var encodedMsg = user + " says " + msg;
@@ -193,6 +197,14 @@ $(document).ready(function () {
     connection.invoke("NotifyFriendRequest", userNames[0], userNames[1]).catch(function (err) {
       return console.error(err.toString());
     });
+  });
+
+  $("#sendVideoChatInvite").on("click", function () {
+    var videoToUser = $("#videoToUser").val();
+    var videoFromUser = $("#videoFromUser").val();
+    var videoUrl = window.location.href;
+
+    connection.invoke("SendVideoInvite", videoToUser.toString(), videoFromUser.toString(), videoUrl);
   });
 });
 
@@ -274,6 +286,9 @@ function register_popup(id, name) {
 
   popups.unshift(id);
 
+  // $(".send-message").on("click", function () {
+  //   alert("Hi");
+  // });
   calculate_popups();
 
 }
@@ -302,9 +317,12 @@ window.addEventListener("load", calculate_popups);
 // VIDEO STUFF
 
 // Generate random room name if needed
-if (!location.hash) {
-  location.hash = Math.floor(Math.random() * 0xFFFFFF).toString(16);
+if (window.location.pathname == "/Video") {
+  if (!location.hash) {
+    location.hash = Math.floor(Math.random() * 0xFFFFFF).toString(16);
+  }
 }
+
 const roomHash = location.hash.substring(1);
 
 // TODO: Replace with your own channel ID

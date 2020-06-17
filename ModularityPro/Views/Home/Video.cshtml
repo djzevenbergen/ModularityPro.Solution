@@ -1,6 +1,27 @@
   @{
     Layout = "_Layout";
   }
+   <div class="jumbotron">
+  </div>
+  <div class="row">
+    <div class="col-md-12 video-box">
+      <video id="localVideo" style="float: left;" autoplay muted></video>
 
-  <video id="localVideo" autoplay muted></video>
-  <video id="remoteVideo" autoplay></video>
+      <video id="remoteVideo" style="float: right;" autoplay></video>
+    </div>
+  </div>
+  <div class="row video-chat-invite-area">
+        <div class="col-md-12">
+      <input type="hidden" id="videoFromUser" value="@User.Identity.Name">
+      <select id="videoToUser">
+        @if(@ViewBag.AllFriends != null && ViewBag.AllFriends.Count > 0)
+        {
+          @foreach(Friend friend in ViewBag.AllFriends)
+          {
+            <option value="@friend.UserFriend.Id">@friend.UserFriend.FirstName @friend.UserFriend.LastName</option>
+          }
+        }
+      </select><br><br>
+      <button class="btn btn-dark" id="sendVideoChatInvite">Invite</button>
+    </div>
+  </div>
