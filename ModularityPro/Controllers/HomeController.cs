@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Security.Claims;
 using ModularityPro.Models;
 using System.Web;
+using Microsoft.AspNetCore.Http.Extensions;
 using System;
 
 namespace ModularityPro.Controllers
@@ -102,14 +103,6 @@ namespace ModularityPro.Controllers
       return View(allUsers);
     }
 
-    // [HttpGet("/Profile/{name}")]
-    // public ActionResult Profile(string name)
-    // {
-    //   ViewBag.Friends = _db.Friends.Where(user => user.User.UserName == name).Include(user => user.UserFriend).ToList();
-    //   ApplicationUser thisUser = _db.Users.Where(user => user.UserName == name).FirstOrDefault();
-    //   return View(thisUser);
-    // }
-
     [HttpPost]
     public ActionResult AddFriend(string userName)
     {
@@ -132,7 +125,8 @@ namespace ModularityPro.Controllers
       ViewBag.User = thisUser;
       ViewBag.Friends = _db.Friends.Where(user => user.User.UserName == myName).Include(user => user.UserFriend).ToList();
       ViewBag.Messages = _db.Messages.Where(message => message.FromUser.Id == thisUser.Id);
-
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
 
       return View();
     }

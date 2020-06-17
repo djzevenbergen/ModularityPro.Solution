@@ -41,9 +41,13 @@ namespace ModularityPro.Hubs
       await base.OnDisconnectedAsync(exception);
     }
 
-    public async Task SendPrivateMessage(string toUserId, string fromUserName, string message)
+    public async Task SendPrivateMessage(string toUserName, string fromUserName, string message)
     {
-      await Clients.User(toUserId).SendAsync("ReceiveMessage", fromUserName, message);
+      toUserName.Replace("#", "");
+      ApplicationUser toUser = await _db.Users.Where(users => users.UserName == toUserName).FirstOrDefaultAsync();
+      ApplicationUser fromUser = await _db.Users.Where(users => users.UserName == fromUserName).FirstOrDefaultAsync();
+      string newMessage = fromUser.FirstName + " " + fromUser.LastName + ": " + message;
+      await Clients.User(toUser.Id.ToString()).SendAsync("ReceiveMessage", $"{fromUser.FirstName} {fromUser.LastName}", newMessage);
     }
 
     public async Task NotifyFriendRequest(string toUserName, string fromUserName)

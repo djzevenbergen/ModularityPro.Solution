@@ -132,7 +132,7 @@
                 @foreach(Friend userFriend in @ViewBag.AllFriends)
                 {
                     <li class="sidebar-nav-item">
-                        <a href='javascript:register_popup("@userFriend.UserFriend.UserName","@userFriend.UserFriend.FirstName @userFriend.UserFriend.LastName");' class='sidebar-nav-link'>
+                        <a href="/Chat#@userFriend.UserFriend.UserName" class='sidebar-nav-link' id="chat-@userFriend.UserFriend.UserName">
                             <img width="45" height="45" src="@userFriend.UserFriend.AvatarUrl"
                             aria-hidden="true"
                             focusable="false"
@@ -147,6 +147,21 @@
                     </li>
                 }
             }
+
+                        <li class="sidebar-nav-item">
+                        <a href='javascript:register_popup("Tom", "Tom");' class='sidebar-nav-link' id="chat-Tom">
+                            <img width="45" height="45" src="https://api.adorable.io/avatars/100/Tom.png"
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fad"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            class="svg-inline"
+                            >
+                        <span class="link-text">Tom</span>
+                        </a> 
+                    </li>
     </ul>
   </nav>
 
