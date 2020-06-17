@@ -48,6 +48,7 @@ namespace ModularityPro
         options.Password.RequiredUniqueChars = 0;
       });
 
+
       services.AddSignalR();
 
       // services.AddDistributedMemoryCache();

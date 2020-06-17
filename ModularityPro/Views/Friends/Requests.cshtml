@@ -20,11 +20,6 @@
               @Html.ActionLink("Accept", "ConfirmFriend", "Friends", new { userName = request.User.UserName}, new { @class = "btn btn-primary"})
               @Html.ActionLink("Delete", "DenyFriend", "Friends", new { userName = request.User.UserName}, new { @class = "btn btn-dark"})
             </div>
-            <div class="card-icon">
-              @* <a href="@Url.Action("AddFriend", "Friends")" id="send-friend-request-values", new {userName = request.UserFriend} value="@u.UserName,@User.Identity.Name">
-                <img id="send-friend-request" src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
-              </a> *@
-            </div>
           </div>
         </div>
       </div>
@@ -52,11 +47,6 @@ else{
               </strong>
               <hr>
               <strong>Status: </strong> Pending.
-            </div>
-            <div class="card-icon">
-              @* <a href="@Url.Action("AddFriend", "Friends")" id="send-friend-request-values", new {userName = request.UserFriend} value="@u.UserName,@User.Identity.Name">
-                <img id="send-friend-request" src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
-              </a> *@
             </div>
           </div>
         </div>

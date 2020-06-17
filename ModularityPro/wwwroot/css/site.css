@@ -687,7 +687,7 @@ main {
     position: fixed;
     bottom: 0px;
     right: 220px;
-    height: 285px;
+    height: 300px;
     /* background-color: rgb(237, 239, 244); */
     background-color: white;
     width: 300px;
@@ -721,9 +721,156 @@ main {
     text-decoration: none;
     color: inherit;
 }
+.popup-messages {
+  height: 75%;
+  overflow-y: auto;
+}
 
-.popup-box .popup-messages
+.chat-controls {
+  text-align: center;
+  margin: 0 auto;
+}
+.form-control-chat {
+  height: 35px;
+  margin-right: 5px;
+  width: 75% !important;
+}
+
+/* .popup-box
 {
     height: 100%;
     overflow-y: auto;
+} */
+/*===================================================================================================*/
+
+.alert-area {
+  max-height: 100%;
+  position: fixed;
+  bottom: 25px;
+  left: 20px;
+  right: 20px;
+}
+
+.alert-box {
+  font-size: 16px;
+  color: white;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 5;
+  line-height: 1.3em;
+  padding: 10px 15px;
+  height: 100px;
+  margin: 5px 10px;
+  position: relative;
+  border-radius: 5px;
+  transition: opacity 0.5s ease-in;
+}
+
+.alert-box.hide {
+  opacity: 0;
+}
+
+.alert-close {
+  background: transparent;
+  width: 12px;
+  height: 12px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+}
+
+.alert-close:before,
+.alert-close:after {
+  content: '';
+  width: 15px;
+  border-top: solid 2px white;
+  position: absolute;
+  top: 5px;
+  right: -1px;
+  display: block;
+}
+
+.alert-close:before {
+  transform: rotate(45deg);
+}
+
+.alert-close:after {
+  transform: rotate(135deg);
+}
+
+.alert-close:hover:before,
+.alert-close:hover:after {
+  border-top: solid 2px #d8d8d8;
+}
+
+@media (max-width: 767px) and (min-width: 481px) {
+  .alert-area {
+    left: 100px;
+    right: 100px;
+  }
+}
+
+@media (min-width: 768px) {
+  .alert-area {
+    width: 350px;
+    left: auto;
+    right: 0;
+  }
+}
+
+/* ALERT RELATED CLASS (END) */
+
+.alert-message-container {
+  text-align: center;
+  line-height: 2.5em;
+  margin-top: 50px;
+}
+
+.alert-message-box {
+  font-size: 20px;
+  width: 300px;
+  border: solid 1px #444;
+  padding: 10px 15px;
+  outline: none;
+  transition: box-shadow 0.1s;
+}
+
+.alert-message-box:focus {
+  box-shadow: 0 0 15px 2px #888;
+}
+
+.alert-message-button {
+  font-size: 18px;
+  color: white;
+  background: #14b9ff;
+  width: 250px;
+  border: solid 1px #14b9ff;
+  padding: 10px 20px;
+  margin-top: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: background 0.1s;
+}
+
+.alert-message-button:hover,
+.alert-message-button:focus,
+.alert-message-button:active {
+  background: #7dd8ff;
+}
+
+/* VIDEO STUFF ================================================================================ */
+video {
+  max-width: calc(50% - 100px);
+  margin: 0 50px;
+  box-sizing: border-box;
+  border-radius: 2px;
+  padding: 0;
+  box-shadow: rgba(156, 172, 172, 0.2) 0px 2px 2px, rgba(156, 172, 172, 0.2) 0px 4px 4px, rgba(156, 172, 172, 0.2) 0px 8px 8px, rgba(156, 172, 172, 0.2) 0px 16px 16px, rgba(156, 172, 172, 0.2) 0px 32px 32px, rgba(156, 172, 172, 0.2) 0px 64px 64px;
+}
+.copy {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 16px;
+  color: rgba(0, 0, 0, 0.5);
 }

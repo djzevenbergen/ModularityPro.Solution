@@ -13,5 +13,11 @@ namespace ModularityPro.Models
     [DataType(DataType.MultilineText)]
     public string Bio { get; set; }
     public string AvatarUrl { get; set; }
+    public bool LoggedIn { get; set; }
+
+    public ApplicationUser()
+    {
+      LoggedIn = false;
+    }
   }
 }

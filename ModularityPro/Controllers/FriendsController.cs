@@ -29,6 +29,8 @@ namespace ModularityPro.Controllers
       ViewBag.SentFriendRequests = allSentRequests;
       List<Friend> allReceivedRequests = _db.Friends.Where(users => users.UserFriend.Id == myUserId && users.Responded == false).Include(users => users.User).ToList();
       ViewBag.ReceivedFriendRequests = allReceivedRequests;
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return View();
     }
 
@@ -49,7 +51,8 @@ namespace ModularityPro.Controllers
         _db.Friends.Add(request);
         _db.SaveChanges();
       }
-
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return RedirectToAction("Requests", "Friends");
     }
 
@@ -70,6 +73,8 @@ namespace ModularityPro.Controllers
       _db.Friends.Add(reverseFriendship);
       _db.Entry(friendship).State = EntityState.Modified;
       _db.SaveChanges();
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return RedirectToAction("Requests", "Friends");
     }
 
@@ -80,8 +85,10 @@ namespace ModularityPro.Controllers
       Friend friendship = _db.Friends.Where(friends => friends.User.UserName == userName).Where(friends => friends.UserFriend.UserName == myUserName).FirstOrDefault();
       friendship.Accepted = false;
       friendship.Responded = true;
-      _db.Entry(friendship).State = EntityState.Modified;
+      _db.Friends.Remove(friendship);
       _db.SaveChanges();
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return RedirectToAction("Requests", "Friends");
     }
   }

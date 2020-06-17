@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using System.Threading.Tasks;
 using ModularityPro.ViewModels;
@@ -13,6 +14,7 @@ using System.Security.Principal;
 using Microsoft.AspNetCore.Session;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Caching.Memory;
+using ModularityPro.Hubs;
 
 
 namespace ModularityPro.Controllers
@@ -35,6 +37,8 @@ namespace ModularityPro.Controllers
 
     public ActionResult Register()
     {
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).ToList();
+      ViewBag.AllFriends = allFriends;
       return View();
     }
 
@@ -57,6 +61,8 @@ namespace ModularityPro.Controllers
 
     public ActionResult Login()
     {
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).ToList();
+      ViewBag.AllFriends = allFriends;
       return View();
     }
 
@@ -65,7 +71,6 @@ namespace ModularityPro.Controllers
     {
 
       List<string> uIds = new List<string> { };
-
 
 
       Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager
@@ -78,6 +83,10 @@ namespace ModularityPro.Controllers
         // Console.WriteLine(listLog.GetType());
         // listLog.Add(User.Identity.Name);
         // _cache.Set("list", result);
+        ApplicationUser thisUser = await _db.Users.Where(users => users.UserName == users.UserName).FirstOrDefaultAsync();
+        thisUser.LoggedIn = true;
+        _db.Entry(thisUser).State = EntityState.Modified;
+        _db.SaveChanges();
 
         return RedirectToAction("Index", "Home");
       }
@@ -90,6 +99,10 @@ namespace ModularityPro.Controllers
     [HttpPost]
     public async Task<ActionResult> Logout()
     {
+      ApplicationUser thisUser = await _db.Users.Where(users => users.UserName == users.UserName).FirstOrDefaultAsync();
+      thisUser.LoggedIn = false;
+      _db.Entry(thisUser).State = EntityState.Modified;
+      _db.SaveChanges();
       await _signInManager.SignOutAsync();
       return RedirectToAction("Index", "Home");
     }

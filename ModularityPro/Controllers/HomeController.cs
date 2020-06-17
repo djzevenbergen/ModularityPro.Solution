@@ -28,8 +28,70 @@ namespace ModularityPro.Controllers
     public ActionResult Index()
     {
       ApplicationUser thisUser = _db.Users.Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault();
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       ViewBag.User = thisUser;
+
+      List<Post> postIds = new List<Post>();
+
+      foreach (Friend f in allFriends)
+      {
+        List<Post> allPostsByThisUser = _db.Posts.Where(posts => posts.User.UserName == f.UserFriend.UserName || posts.User.UserName == thisUser.UserName).ToList();
+        // Console.WriteLine("ALLPOSTSBYUSER " + allPostsByThisUser.Count);
+        foreach (Post p in allPostsByThisUser)
+        {
+          if (!postIds.Contains(p))
+          {
+            postIds.Add(p);
+            // this whole method pull all posts by the user's friends and then returns them in a sorted list
+            // Console.WriteLine(p.Content + "by:" + p.User.UserName);
+          }
+        }
+      }
+      SortPosts(postIds, 0, postIds.Count - 1);
+
+      ViewBag.Posts = postIds;
+      // Console.WriteLine("VIEWBAGPOSTS " + ViewBag.Posts);
+
       return View();
+    }
+
+    public static void SortPosts(List<Post> posts, int left, int right)
+    {
+      if (left >= right)
+      {
+        return;
+      }
+
+      int pivot = posts[(left + right) / 2].PostId;
+      int index = partition(posts, left, right, pivot);
+      SortPosts(posts, left, index - 1);
+      SortPosts(posts, index, right);
+    }
+
+    public static int partition(List<Post> posts, int left, int right, int pivot)
+    {
+      while (left <= right)
+      {
+        while (posts[left].PostId > pivot)
+        {
+          left++;
+        }
+        while (posts[right].PostId < pivot)
+        {
+          right--;
+        }
+
+        if (left <= right)
+        {
+          Post temp = posts[left];
+          posts[left] = posts[right];
+          posts[right] = temp;
+          left++;
+          right--;
+        }
+      }
+      return left;
     }
 
     [HttpGet("/FindFriends")]
@@ -75,6 +137,12 @@ namespace ModularityPro.Controllers
       return View();
     }
 
+    [HttpGet]
+    public ActionResult Video()
+    {
+      return View();
+    }
+
     [HttpGet("/search")]
 
     public ActionResult Search(string search) //, string searchParam
@@ -100,6 +168,8 @@ namespace ModularityPro.Controllers
         matchesUser = usersMinus.ToList();
       }
       ViewBag.SearchString = search;
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return View(matchesUser);
     }
 

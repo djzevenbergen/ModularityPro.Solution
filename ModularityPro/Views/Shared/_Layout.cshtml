@@ -30,6 +30,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
     <script src="~/js/site.js"></script>
 </head>
 <body>
@@ -47,7 +48,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> Friends</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Video"><i class="fa fa-television" aria-hidden="true"></i> Video Call</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="Requests" onclick="viewFriendRequests()"><i class="fa fa-user-circle-o" aria-hidden="true"></i> <span id ="friend-request-header">Requests</span></span></a>
@@ -126,66 +127,26 @@
         </svg>
         </a>
         </li>
-
-      <li class="sidebar-nav-item">   
-          <a href="javascript:register_popup('narayan-prusty', 'Narayan Prusty');" class="sidebar-nav-link">
-            <img width="45" height="45" src="https://api.adorable.io/avatars/100/TEST1.png"
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fad"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-            class="svg-inline"
-            />
-          <span class="link-text">Narayan Prusty</span>
-          </a> 
-      </li>
-
-      <li class="sidebar-nav-item">    
-          <a href="javascript:register_popup('QNimate', 'QNimate');" class="sidebar-nav-link">
-            <img width="45" height="45" src="https://api.adorable.io/avatars/100/TEST2.png"
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fad"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 576 512"
-            class="svg-inline"
-            />
-          <span class="link-text">QNimate</span>
-          </a>  
-      </li>
-
-      <li class="sidebar-nav-item">    
-          <a href="javascript:register_popup('QScutter', 'QScutter');" class="sidebar-nav-link">
-            <img width="45" height="45" src="https://api.adorable.io/avatars/100/TEST3.png"
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fad"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 512 512"
-            class="svg-inline"
-            />
-          <span class="link-text">QScutter</span>
-          </a>  
-      </li>
-
-      <li class="sidebar-nav-item">  
-          <a href="javascript:register_popup('QIdea', 'QIdea');" class="sidebar-nav-link">
-            <img width="45" height="45" src="https://api.adorable.io/avatars/100/TEST4.png"
-            aria-hidden="true"
-            focusable="false"
-            data-prefix="fad"
-            role="img"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 576 512"
-            class="svg-inline"
-            />
-          <span class="link-text">QIdea</span>
-          </a>  
-      </li>
+            @if(ViewBag.AllFriends != null && ViewBag.AllFriends.Count > 0)
+            {
+                @foreach(Friend userFriend in @ViewBag.AllFriends)
+                {
+                    <li class="sidebar-nav-item">
+                        <a href='javascript:register_popup("@userFriend.UserFriend.UserName","@userFriend.UserFriend.FirstName @userFriend.UserFriend.LastName");' class='sidebar-nav-link'>
+                            <img width="45" height="45" src="@userFriend.UserFriend.AvatarUrl"
+                            aria-hidden="true"
+                            focusable="false"
+                            data-prefix="fad"
+                            role="img"
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="0 0 512 512"
+                            class="svg-inline"
+                            >
+                        <span class="link-text">@userFriend.UserFriend.FirstName @userFriend.UserFriend.LastName</span>
+                        </a> 
+                    </li>
+                }
+            }
     </ul>
   </nav>
 
@@ -223,5 +184,6 @@
     <script src="~/js/site.js" asp-append-version="true"></script>
 
     @RenderSection("Scripts", required: false)
+    <div id="alert-area" class="alert-area"></div>
 </body>
 </html>
