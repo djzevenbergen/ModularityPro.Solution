@@ -32,8 +32,11 @@ namespace ModularityPro.Controllers
       ViewBag.AvatarUrl = $"https://api.adorable.io/avatars/100/{thisUser.UserName}.png";
       List<Post> userPosts = _db.Posts.Where(posts => posts.User.Id == thisUser.Id).OrderByDescending(posts => posts.PostId).ToList();
       List<Friend> userFriends = _db.Friends.Where(users => users.User.Id == thisUser.Id && users.Accepted == true).ToList();
+      // Console.WriteLine(userFriends[0].User.UserName);
       ViewBag.Friends = userFriends;
       ViewBag.Posts = userPosts;
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return View(thisUser);
     }
 
@@ -43,6 +46,8 @@ namespace ModularityPro.Controllers
       ViewBag.Friends = _db.Friends.Where(user => user.User.UserName == name).Include(user => user.UserFriend).ToList();
       ApplicationUser thisUser = _db.Users.Where(user => user.UserName == name).FirstOrDefault();
       ViewBag.AvatarUrl = $"https://api.adorable.io/avatars/100/{thisUser.UserName}.png";
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return View(thisUser);
     }
 
@@ -56,6 +61,8 @@ namespace ModularityPro.Controllers
       thisUser.Email = user.Email;
       _db.Entry(thisUser).State = EntityState.Modified;
       _db.SaveChanges();
+      List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
+      ViewBag.AllFriends = allFriends;
       return RedirectToAction("Index", "Profile"); // not sure how it knows the user ID #blackmagic
     }
   }

@@ -45,17 +45,45 @@
     </div>
 
     <h3>Friends</h3>
+
     @if(@ViewBag.Friends != null)
-    {
+    { 
+      @* var count = 0; *@
       @foreach(Friend friend in ViewBag.Friends)
       {  
-
-        <div class="card col-md-3">
-          @friend.UserFriend.UserName
-        </div>
-
+  
+        <div class='card col-md-3'> @friend.UserFriend.UserName</div>
       }
     }
+
+@* 
+        if (count == 0 )
+        {  
+          <div class = "row">
+           <div class='card col-md-3'> @friend.UserFriend.UserName</div>
+
+           @(count = count + 1);     
+        }
+        else if (count == 2)
+        {
+          <div class='card col-md-3'> @friend.UserFriend.UserName</div>
+          </div>
+          @(count = count + 1);
+        }
+        else if (count < 3)
+        {
+          
+
+          <div class='card col-md-3'> @friend.UserFriend.UserName</div>
+          @(count = count + 1);
+        }
+
+
+      }
+    } *@
+     
+
+
     <div class="row">
       <div class="card col-md-3">
         Test
@@ -67,7 +95,9 @@
         Test
       </div>
     </div>
-  </div>
+    </div>
+    
+  
   <div class="col-md-6">
     <div class="profile-post-header">
       <div class="profile-header-title">

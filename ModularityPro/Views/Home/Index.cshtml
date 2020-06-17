@@ -18,6 +18,25 @@
             <input type="submit" class="btn btn-dark" value="Post">
           }
         </div>
+        <div>
+          @if(ViewBag.Posts != null && ViewBag.Posts.Count > 0)
+          {
+            @foreach(Post post in ViewBag.Posts)
+            {
+              <div class="card profile-post">
+                <div class="card-body">
+                  <img src="@post.User.AvatarUrl" class="avatar">
+                  <div class="card-content">
+                    <strong>
+                      @Html.ActionLink($"{@post.User.FirstName} {@post.User.LastName}", "Index", "Profile", new {name = @post.User.UserName})
+                    </strong>
+                    <p>@post.Content</p>
+                  </div>
+                </div>
+              </div>
+            }
+          }
+        </div>
       </div>
     </div>
   </div>
