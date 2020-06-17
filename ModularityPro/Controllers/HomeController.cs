@@ -221,6 +221,27 @@ namespace ModularityPro.Controllers
     {
       return View();
     }
+
+    public ActionResult Edit(int id)
+    {
+      Post EditablePost = _db.Posts.FirstOrDefault(entry => entry.PostId == id);
+      return View(EditablePost);
+    }
+
+
+    [HttpPut]
+    public void Edit(int id, [FromBody] Post post)
+    {
+      ApplicationUser ThisUser = _db.Users.Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault();
+      Post SpecificPost = _db.Posts.Where(posts => posts.PostId == id).FirstOrDefault();
+      if (SpecificPost.User.Id == ThisUser.Id)
+      {
+        post.PostId = id;
+        _db.Entry(post).State = EntityState.Modified;
+        _db.SaveChanges();
+      }
+
+    }
   }
 }
 

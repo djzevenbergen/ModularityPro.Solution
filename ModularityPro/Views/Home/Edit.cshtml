@@ -1,0 +1,22 @@
+@{
+  Layout = "_Layout";
+}
+
+@model ModularityPro.Models.Post
+
+<h2>Edit</h2>
+
+<h4>Edit Your contents: @Html.DisplayFor(model => model.Content)</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(model => model.PostId)
+
+    @Html.LabelFor(model => model.Content)
+    @Html.EditorFor(model => model.Content)
+
+
+    <input type="submit" value="Save" />
+}
+
+<p>@Html.ActionLink("Back to Posts", "Index")</p>
