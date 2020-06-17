@@ -1,6 +1,5 @@
 @{
   Layout = "_Layout";
-  int friendCount = 0;
 }
 @using ModularityPro.Models
 
@@ -17,7 +16,7 @@
           <div class="profile-header-action">
             @if(User.Identity.Name != @Model.UserName)
             {
-              <a href="@Url.Action("AddFriend", "Friends", new { userName = @Model.UserName})" id="send-friend-request-values" value="@Model.UserName,@User.Identity.Name">
+              <a href="@Url.Action("AddFriend", "Friends", new { userName = @Model.UserName})" class="send-friend-request-values" value="@Model.UserName,@User.Identity.Name">
                 <img id="send-friend-request" src="https://i.imgur.com/jnNc85n.png" class="add-friend-icon">
               </a>
             }
@@ -45,16 +44,18 @@
     </div>
 
     <h3>Friends</h3>
-
+    <div class="row">
     @if(@ViewBag.Friends != null)
     { 
-      @* var count = 0; *@
       @foreach(Friend friend in ViewBag.Friends)
       {  
-  
-        <div class='card col-md-3'> @friend.UserFriend.UserName</div>
+        <div class='card col-md-3'>
+          <img src="@friend.UserFriend.AvatarUrl" style="border: 1px solid black;">
+         <strong>@Html.ActionLink($"{friend.UserFriend.UserName}", "Index", "Profile", new {name = friend.UserFriend.UserName})</strong>
+        </div>
       }
     }
+    </div>
 
 @* 
         if (count == 0 )
@@ -84,7 +85,7 @@
      
 
 
-    <div class="row">
+    @* <div class="row">
       <div class="card col-md-3">
         Test
       </div>
@@ -94,8 +95,8 @@
       <div class="card col-md-3">
         Test
       </div>
-    </div>
-    </div>
+    </div> *@
+  </div>
     
   
   <div class="col-md-6">

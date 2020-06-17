@@ -7,7 +7,6 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Identity;
 using ModularityPro.Models;
 using ModularityPro.Hubs;
-using ModularityPro.Services;
 using Microsoft.AspNetCore.Session;
 using System.Runtime;
 

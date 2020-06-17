@@ -43,6 +43,7 @@ namespace ModularityPro.Controllers
           if (!postIds.Contains(p))
           {
             postIds.Add(p);
+            // this whole method pull all posts by the user's friends and then returns them in a sorted list
             // Console.WriteLine(p.Content + "by:" + p.User.UserName);
           }
         }
@@ -133,6 +134,12 @@ namespace ModularityPro.Controllers
       ViewBag.Messages = _db.Messages.Where(message => message.FromUser.Id == thisUser.Id);
 
 
+      return View();
+    }
+
+    [HttpGet]
+    public ActionResult Video()
+    {
       return View();
     }
 

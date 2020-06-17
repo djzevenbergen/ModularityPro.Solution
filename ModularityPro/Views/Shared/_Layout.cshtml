@@ -1,6 +1,5 @@
 ﻿@using Microsoft.AspNetCore.Http
 @using ModularityPro.Models
-@using ModularityPro.Services
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<ApplicationUser> userManager
 @{
@@ -31,6 +30,7 @@
     <link rel="stylesheet" href="~/css/site.css" />
     <script src="~/lib/jquery/dist/jquery.js"></script>
     <script src="~/lib/signalr/dist/browser/signalr.min.js"></script>
+    <script type='text/javascript' src='https://cdn.scaledrone.com/scaledrone.min.js'></script>
     <script src="~/js/site.js"></script>
 </head>
 <body>
@@ -48,7 +48,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="#"><i class="fa fa-address-book-o" aria-hidden="true"></i> Friends</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Video"><i class="fa fa-television" aria-hidden="true"></i> Video Call</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="Requests" onclick="viewFriendRequests()"><i class="fa fa-user-circle-o" aria-hidden="true"></i> <span id ="friend-request-header">Requests</span></span></a>
