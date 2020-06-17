@@ -60,13 +60,11 @@ namespace ModularityPro
 
 
       services.AddSignalR();
-
       // services.AddDistributedMemoryCache();
       services.AddMemoryCache();
       // services.AddSingleton<List>();
       services.AddSession();
       // services.AddMemoryCache();
-
     }
 
     public void Configure(IApplicationBuilder app, ModularityProContext context)

@@ -166,6 +166,10 @@ $(document).ready(function () {
   connection.on("ReceiveMessage", function (user, message) {
     var existing = $(".chat-messages-area").html();
     var previous = $(".chat-message").last().text();
+    var location = window.location.href;
+    if (!location.includes("chat") && $(".alert-box").length === 0) {
+      alertbox.show("You received a friend message from " + user);
+    }
     if (message != previous) {
       $(".chat-messages-area").html(existing + "<span class='chat-message'>" + message + "</span><br>");
       //$(".chat-messages-area").append("<span class='chat-message'>" + message + "</span><br>");
