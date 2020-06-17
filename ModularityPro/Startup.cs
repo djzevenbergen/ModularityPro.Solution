@@ -29,13 +29,23 @@ namespace ModularityPro
       // 
       services.AddMvc();
 
+
+
+      // var host = Configuration["DBHOST"] ?? "localhost";
+      // var port = Configuration["DBPORT"] ?? "3306";
+      // var password = Configuration["DBPASSWORD"] ?? "secret";
+
+
       services.AddEntityFrameworkMySql()
-        .AddDbContext<ModularityProContext>(options => options
-        .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+        .AddDbContext<ModularityProContext>(options =>
+
+        options
+      .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ModularityProContext>()
-                .AddDefaultTokenProviders();
+      .AddEntityFrameworkStores<ModularityProContext>()
+      .AddDefaultTokenProviders();
 
 
       services.Configure<IdentityOptions>(options =>
@@ -59,7 +69,7 @@ namespace ModularityPro
 
     }
 
-    public void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app, ModularityProContext context)
     {
       app.UseStaticFiles();
 
@@ -68,6 +78,8 @@ namespace ModularityPro
       app.UseAuthentication();
 
       app.UseSession();
+
+      context.Database.Migrate();
 
       app.UseMvc(routes =>
       {
