@@ -158,38 +158,35 @@ $(document).ready(function () {
   });
 
   connection.on("ReceiveVideoInvite", (fromUser, inviteUrl) => {
-    alertboxPersistent.show("You received a video call invite from " + fromUser + ": " + inviteUrl);
+    if ($(".alert-box").length === 0) {
+      alertboxPersistent.show("You received a video call invite from " + fromUser + ": " + inviteUrl);
+    }
   });
 
-  // connection.on("ReceiveMessage", function (user, message) {
-  //   var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  //   var encodedMsg = user + " says " + msg;
-  //   var li = document.createElement("li");
-  //   li.textContent = encodedMsg;
-  //   document.getElementById("messagesList").appendChild(li);
-  // });
-  // connection.start().then(function () {
-  //   document.getElementById("sendButton").disabled = false;
-  // }).catch(function (err) {
-  //   return console.error(err.toString());
-  // });
-
-  // document.getElementById("sendButton").addEventListener("click", function (event) {
-  //   var fromUser = document.getElementById("userInput").value;
-  //   var message = document.getElementById("messageInput").value;
-  //   var toUser = document.getElementById("sendToUser").value;
+  connection.on("ReceiveMessage", function (user, message) {
+    var existing = $(".chat-messages-area").html();
+    var previous = $(".chat-message").last().text();
+    if (message != previous) {
+      $(".chat-messages-area").html(existing + "<span class='chat-message'>" + message + "</span><br>");
+      //$(".chat-messages-area").append("<span class='chat-message'>" + message + "</span><br>");
+      $(".chat-messages-area").animate({ scrollTop: $(".chat-messages-area")[0].scrollHeight }, 100);
+    }
+  });
 
 
-  //   // var msg = message.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
-  //   var encodedMsg = fromUser + " says " + message;
-  //   var li = document.createElement("li");
-  //   li.textContent = encodedMsg;
-  //   document.getElementById("messagesList").appendChild(li);
-
-
-  // connection.invoke("SendPrivateMessage", toUser, fromUser, message).catch(function (err) {
-  //   return console.error(err.toString());
-  // });
+  $("#chat-form-submit").off("click").on("click", function (event) {
+    event.preventDefault();
+    var toUser = location.hash;
+    toUser = toUser.replace("#", "");
+    var existing = $(".chat-messages-area").html();
+    var fromUser = $("#chat-form-from").val();
+    var message = $("#chat-form-message").val();
+    $("#chat-form-message").val("");
+    $(".chat-messages-area").html(existing + "<span class='chat-message'>You: " + message + "</span><br>");
+    //$(".chat-messages-area").append("<span class='chat-message'>You: " + message + "</span><br>");
+    $(".chat-messages-area").animate({ scrollTop: $(".chat-messages-area")[0].scrollHeight }, 100);
+    connection.invoke("SendPrivateMessage", toUser, fromUser, message);
+  });
 
   $(".send-friend-request-values").on("click", function () {
     var rawInput = $(this).attr("value");
@@ -314,127 +311,3 @@ window.addEventListener("resize", calculate_popups);
 window.addEventListener("load", calculate_popups);
 
 //========================================================================================================
-// VIDEO STUFF
-
-// Generate random room name if needed
-if (window.location.pathname == "/Video") {
-  if (!location.hash) {
-    location.hash = Math.floor(Math.random() * 0xFFFFFF).toString(16);
-  }
-}
-
-const roomHash = location.hash.substring(1);
-
-// TODO: Replace with your own channel ID
-const drone = new ScaleDrone('QfIDCLIWXi1NQX9U');
-// Room name needs to be prefixed with 'observable-'
-const roomName = 'observable-' + roomHash;
-const configuration = {
-  iceServers: [{
-    urls: 'stun:stun.l.google.com:19302'
-  }]
-};
-let room;
-let pc;
-
-
-function onSuccess() { };
-function onError(error) {
-  console.error(error);
-};
-
-drone.on('open', error => {
-  if (error) {
-    return console.error(error);
-  }
-  room = drone.subscribe(roomName);
-  room.on('open', error => {
-    if (error) {
-      onError(error);
-    }
-  });
-  // We're connected to the room and received an array of 'members'
-  // connected to the room (including us). Signaling server is ready.
-  room.on('members', members => {
-    console.log('MEMBERS', members);
-    // If we are the second user to connect to the room we will be creating the offer
-    const isOfferer = members.length === 2;
-    startWebRTC(isOfferer);
-  });
-});
-
-// Send signaling data via Scaledrone
-function sendMessage(message) {
-  drone.publish({
-    room: roomName,
-    message
-  });
-}
-
-function startWebRTC(isOfferer) {
-  pc = new RTCPeerConnection(configuration);
-
-  // 'onicecandidate' notifies us whenever an ICE agent needs to deliver a
-  // message to the other peer through the signaling server
-  pc.onicecandidate = event => {
-    if (event.candidate) {
-      sendMessage({ 'candidate': event.candidate });
-    }
-  };
-
-  // If user is offerer let the 'negotiationneeded' event create the offer
-  if (isOfferer) {
-    pc.onnegotiationneeded = () => {
-      pc.createOffer().then(localDescCreated).catch(onError);
-    }
-  }
-
-  // When a remote stream arrives display it in the #remoteVideo element
-  pc.ontrack = event => {
-    const stream = event.streams[0];
-    if (!remoteVideo.srcObject || remoteVideo.srcObject.id !== stream.id) {
-      remoteVideo.srcObject = stream;
-    }
-  };
-
-  navigator.mediaDevices.getUserMedia({
-    audio: true,
-    video: true,
-  }).then(stream => {
-    // Display your local video in #localVideo element
-    localVideo.srcObject = stream;
-    // Add your stream to be sent to the conneting peer
-    stream.getTracks().forEach(track => pc.addTrack(track, stream));
-  }, onError);
-
-  // Listen to signaling data from Scaledrone
-  room.on('data', (message, client) => {
-    // Message was sent by us
-    if (client.id === drone.clientId) {
-      return;
-    }
-
-    if (message.sdp) {
-      // This is called after receiving an offer or answer from another peer
-      pc.setRemoteDescription(new RTCSessionDescription(message.sdp), () => {
-        // When receiving an offer lets answer it
-        if (pc.remoteDescription.type === 'offer') {
-          pc.createAnswer().then(localDescCreated).catch(onError);
-        }
-      }, onError);
-    } else if (message.candidate) {
-      // Add the new ICE candidate to our connections remote description
-      pc.addIceCandidate(
-        new RTCIceCandidate(message.candidate), onSuccess, onError
-      );
-    }
-  });
-}
-
-function localDescCreated(desc) {
-  pc.setLocalDescription(
-    desc,
-    () => sendMessage({ 'sdp': pc.localDescription }),
-    onError
-  );
-}

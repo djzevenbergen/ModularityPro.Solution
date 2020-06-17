@@ -1,0 +1,17 @@
+@{
+  Layout = "_Layout";
+}
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="chat-messages-area">
+    </div>
+    <div class="chat-message-input">
+      <form class="form-inline chat-form">
+        <input type="hidden" id="chat-form-from" value="@User.Identity.Name.ToString()">
+        <input type="text" class="form-control chat-input" id="chat-form-message">
+        <input type="submit" class="btn btn-primary" id="chat-form-submit" value="Send">
+      </form>
+    </div>
+  </div>
+</div>

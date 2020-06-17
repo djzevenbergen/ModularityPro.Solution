@@ -45,5 +45,36 @@ namespace ModularityPro.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index", "Home");
     }
+
+    [HttpDelete]
+    public ActionResult DeletePost(int id)
+    {
+      ApplicationUser ThisUser = _db.Users.Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault();
+      Post SpecificPost = _db.Posts.Where(posts => posts.PostId == id).FirstOrDefault();
+      if (SpecificPost.User.Id == ThisUser.Id)
+      {
+        var PostToDelete = _db.Posts.FirstOrDefault(entry => entry.PostId == id);
+        _db.Posts.Remove(PostToDelete);
+        _db.SaveChanges();
+        return RedirectToAction("Index", "Home");
+      }
+      else
+      {
+        return RedirectToAction("Index", "Home");
+      }
+    }
+
+    [HttpPut]
+    public void EditPost(int id, [FromBody] Post post)
+    {
+      ApplicationUser ThisUser = _db.Users.Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault();
+      Post SpecificPost = _db.Posts.Where(posts => posts.PostId == id).FirstOrDefault();
+      if (SpecificPost.User.Id == ThisUser.Id)
+      {
+        post.PostId = id;
+        _db.Entry(post).State = EntityState.Modified;
+        _db.SaveChanges();
+      }
+    }
   }
 }
