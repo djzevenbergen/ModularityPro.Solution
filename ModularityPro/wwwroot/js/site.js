@@ -181,8 +181,9 @@ $(document).ready(function () {
     var existing = $(".chat-messages-area").html();
     var fromUser = $("#chat-form-from").val();
     var message = $("#chat-form-message").val();
+    var fromRealName = $("#chat-form-from-realname").val();
     $("#chat-form-message").val("");
-    $(".chat-messages-area").html(existing + "<span class='chat-message'>You: " + message + "</span><br>");
+    $(".chat-messages-area").html(existing + "<span class='chat-message'>" + fromRealName + ": " + message + "</span><br>");
     //$(".chat-messages-area").append("<span class='chat-message'>You: " + message + "</span><br>");
     $(".chat-messages-area").animate({ scrollTop: $(".chat-messages-area")[0].scrollHeight }, 100);
     connection.invoke("SendPrivateMessage", toUser, fromUser, message);

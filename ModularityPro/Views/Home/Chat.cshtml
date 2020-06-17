@@ -5,10 +5,18 @@
 <div class="row">
   <div class="col-md-12">
     <div class="chat-messages-area">
+      @if(ViewBag.Messages != null)
+      {
+        @foreach(Message message in ViewBag.Messages)
+        {
+          <span class="chat-message">@message.Content</span><br>
+        }
+      }
     </div>
     <div class="chat-message-input">
       <form class="form-inline chat-form">
         <input type="hidden" id="chat-form-from" value="@User.Identity.Name.ToString()">
+        <input type="hidden" id="chat-form-from-realname" value="@ViewBag.User.FirstName @ViewBag.User.LastName">
         <input type="text" class="form-control chat-input" id="chat-form-message">
         <input type="submit" class="btn btn-primary" id="chat-form-submit" value="Send">
       </form>

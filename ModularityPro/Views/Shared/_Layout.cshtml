@@ -132,7 +132,7 @@
                 @foreach(Friend userFriend in @ViewBag.AllFriends)
                 {
                     <li class="sidebar-nav-item">
-                        <a href="/Chat#@userFriend.UserFriend.UserName" class='sidebar-nav-link' id="chat-@userFriend.UserFriend.UserName">
+                        <a href="/Chat/@userFriend.UserFriend.UserName#@userFriend.UserFriend.UserName" class='sidebar-nav-link' id="chat-@userFriend.UserFriend.UserName">
                             <img width="45" height="45" src="@userFriend.UserFriend.AvatarUrl"
                             aria-hidden="true"
                             focusable="false"

@@ -47,6 +47,12 @@ namespace ModularityPro.Hubs
       ApplicationUser toUser = await _db.Users.Where(users => users.UserName == toUserName).FirstOrDefaultAsync();
       ApplicationUser fromUser = await _db.Users.Where(users => users.UserName == fromUserName).FirstOrDefaultAsync();
       string newMessage = fromUser.FirstName + " " + fromUser.LastName + ": " + message;
+      Message storeMessage = new Message();
+      storeMessage.FromUser = fromUser;
+      storeMessage.ToUser = toUser;
+      storeMessage.Content = newMessage;
+      _db.Messages.Add(storeMessage);
+      _db.SaveChanges();
       await Clients.User(toUser.Id.ToString()).SendAsync("ReceiveMessage", $"{fromUser.FirstName} {fromUser.LastName}", newMessage);
     }
 

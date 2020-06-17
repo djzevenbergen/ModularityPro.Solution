@@ -65,12 +65,12 @@ namespace ModularityPro.Controllers
       }
 
       int pivot = posts[(left + right) / 2].PostId;
-      int index = partition(posts, left, right, pivot);
+      int index = PartitionPosts(posts, left, right, pivot);
       SortPosts(posts, left, index - 1);
       SortPosts(posts, index, right);
     }
 
-    public static int partition(List<Post> posts, int left, int right, int pivot)
+    public static int PartitionPosts(List<Post> posts, int left, int right, int pivot)
     {
       while (left <= right)
       {
@@ -117,18 +117,58 @@ namespace ModularityPro.Controllers
       return RedirectToAction("Index", "Home");
     }
 
-    [HttpGet("/Chat")]
-    public ActionResult Chat()
+    [HttpGet("/Chat/{name}")]
+    public ActionResult Chat(string name)
     {
+      List<Message> allMessages = _db.Messages.Where(messages => (messages.FromUser.UserName == User.FindFirstValue(ClaimTypes.Name) && messages.ToUser.UserName == name) || (messages.ToUser.UserName == User.FindFirstValue(ClaimTypes.Name) && messages.FromUser.UserName == name)).ToList();
+      SortMessages(allMessages, 0, allMessages.Count - 1);
       string myName = User.FindFirstValue(ClaimTypes.Name);
       ApplicationUser thisUser = _db.Users.Where(users => users.UserName == myName).FirstOrDefault();
       ViewBag.User = thisUser;
       ViewBag.Friends = _db.Friends.Where(user => user.User.UserName == myName).Include(user => user.UserFriend).ToList();
-      ViewBag.Messages = _db.Messages.Where(message => message.FromUser.Id == thisUser.Id);
+      ViewBag.Messages = allMessages;
       List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
       ViewBag.AllFriends = allFriends;
 
       return View();
+    }
+
+    public static void SortMessages(List<Message> messages, int left, int right)
+    {
+      if (left >= right)
+      {
+        return;
+      }
+
+      int pivot = messages[(left + right) / 2].MessageId;
+      int index = PartitionMessages(messages, left, right, pivot);
+      SortMessages(messages, left, index - 1);
+      SortMessages(messages, index, right);
+    }
+
+    public static int PartitionMessages(List<Message> messages, int left, int right, int pivot)
+    {
+      while (left <= right)
+      {
+        while (messages[left].MessageId < pivot)
+        {
+          left++;
+        }
+        while (messages[right].MessageId > pivot)
+        {
+          right--;
+        }
+
+        if (left <= right)
+        {
+          Message temp = messages[left];
+          messages[left] = messages[right];
+          messages[right] = temp;
+          left++;
+          right--;
+        }
+      }
+      return left;
     }
 
     [HttpGet("/Video")]
