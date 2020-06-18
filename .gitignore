@@ -1,8 +1,3 @@
 bin/
 obj/
 .vscode
-
-
-  // "ConnectionStrings": {
-  //   "DefaultConnection": "Server=localhost;Port=3306;database=modularity;uid=root;pwd=secret;"
-  // },
