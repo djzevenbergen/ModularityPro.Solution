@@ -42,12 +42,20 @@ html {
   text-shadow: 0px 0px 12px rgb(218, 255, 209), 0px 0px 12px #fff;
 }
 
+.reg-about{
+  float: right;
+}
+
+.reg-form{
+  float: left;
+}
+
 .search-header {
   text-align: center;
 }
 
 .jumbotron {
-  background-color: white;
+  background: #f2f4f5;;
 }
 .profile-header-title {
   float: left;
@@ -170,7 +178,16 @@ html {
 
 body {
   /* Margin bottom by footer height */
-  margin-bottom: 60px;
+  overflow: auto;
+  height: 100%;
+  display: block;
+  height:auto;
+  bottom:0;
+  top:0;
+  left:0;
+  right:0;
+  margin-bottom: 60px; /* Margin bottom by footer height */
+  background: #f2f4f5;
 }
 .footer {
   position: absolute;
@@ -209,6 +226,15 @@ form.search button {
 form.search button:hover {
   background: #0b7dda;
 }
+/*------------ video call ---------------*/
+
+#localVideo{
+  float: left;
+}
+#remoteVideo{
+  float: right;
+}
+
 
 /* glitch effect less css */
 
@@ -579,48 +605,8 @@ main {
 .sidebar:hover .logo svg {
   transform: rotate(-180deg);
 }
-
-/* Small screens */
-@media only screen and (max-width: 600px) {
   
-  .top-align {
-    display:flex;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: flex-end;
-    flex-wrap: nowrap;
-  }
-
-  main{
-    margin: 0;
-    padding-top: 30%;
-    text-align: center;
-  }
-
-  body{
-    margin: 0;
-  }
   
-  .sidebar {
-    bottom: 0 !important;
-    width: 100vw !important;
-    height: 5rem !important;
-  }
-
-  .logo {
-    display: none;
-  }
-
-  .sidebar-nav {
-    flex-direction: row !important;
-  }
-
-  .sidebar-nav-link {
-    justify-content: center !important;
-  }
-
-}
-
 /* Large screens */
 @media only screen and (min-width: 600px) {
   .sidebar {
@@ -711,6 +697,13 @@ main {
     border: 1px solid rgba(29, 49, 91, .3);
 }
 
+#localVideo{
+  float: none;
+  width: 100vw;
+  height: auto;
+  margin: 0;
+}
+
 .popup-box .popup-head
 {
     /* background-color: #6d84b4; */
@@ -758,7 +751,7 @@ main {
 .alert-area {
   max-height: 100%;
   position: fixed;
-  bottom: 25px;
+  bottom: 100px;
   left: 20px;
   right: 20px;
 }
@@ -767,10 +760,10 @@ main {
   font-size: 16px;
   color: white;
   background: rgba(0, 0, 0, 0.9);
-  z-index: 5;
+  z-index: 10;
   line-height: 1.3em;
   padding: 10px 15px;
-  height: 100px;
+  height: 100%;
   margin: 5px 10px;
   position: relative;
   border-radius: 5px;
@@ -939,8 +932,77 @@ video {
   box-shadow: 1px 1px 3px black;
   float: left;
 } 
+/*----------- Mobile Layout -------------------*/
 
 @media only screen and (max-width: 600px) {
+
+  .glitch {
+    position: relative;
+    color: rgb(65, 65, 65);
+    font-size: 1em;
+    letter-spacing: .4em;
+    animation: glitch-skew 0.5s infinite;
+   
+  }
+  .glitch:after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    left: -2px;
+    text-shadow: -2px 0 #00fff9, 2px 2px #ff00c1;
+    animation: glitch-anim2 1s, infinite linear alternate-reverse; 
+  }
+  
+  .top-align {
+    display:flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: flex-end;
+    flex-wrap: nowrap;
+  }
+
+  main{
+    margin: 0;
+    padding-top: 30%;
+    text-align: center;
+    margin-bottom: 70px;
+  }
+
+  body{
+    overflow: auto;
+    height: 100%;
+    display: block;
+    position: absolute;
+    height:auto;
+    bottom:0;
+    top:0;
+    left:0;
+    right:0;
+    margin-bottom: 30px;
+    background: #f2f4f5;
+  }
+  
+  .sidebar {
+    bottom: 0 !important;
+    width: 100vw !important;
+    height: 5rem !important;
+  }
+
+  .logo {
+    display: none;
+  }
+
+  .sidebar-nav {
+    flex-direction: row !important;
+  }
+
+  .sidebar-nav-link {
+    justify-content: center !important;
+  }
+
   .chat-box {
     background-color: #EEEEEE;
     width: 90vw;
@@ -995,6 +1057,63 @@ video {
     left: 15%;
     width: 30vw;
   }
+
+  .video-box{
+    display: flex;
+    flex-direction: column-reverse;
+    width: 100vw;
+  }
+  #localVideo{
+    float: none;
+    width: 25%;
+    height: auto;
+    margin: 0;
+  }
+  #remoteVideo{
+    float: none;
+    width: 300px;
+    height: auto;
+    margin: 0;
+  }
+
+  video {
+    max-width: calc(90vw);
+    margin: 0;
+    box-sizing: border-box;
+    border-radius: 2px;
+    padding: 0;
+    box-shadow: rgba(156, 172, 172, 0.2) 0px 2px 2px, rgba(156, 172, 172, 0.2) 0px 4px 4px, rgba(156, 172, 172, 0.2) 0px 8px 8px, rgba(156, 172, 172, 0.2) 0px 16px 16px, rgba(156, 172, 172, 0.2) 0px 32px 32px, rgba(156, 172, 172, 0.2) 0px 64px 64px;
+  }
+  .copy {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.5);
+  }
+  
+  .video-chat-invite-area {
+    padding: 10px;
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+  }
+
+  #videoToUser{
+    float: center;
+  }
+
+  #sendVideoChatInvite{
+    float: center;
+  }
+
+}
+
+/*-------- break point --------------*/
+
+@media only screen and (max-width: 900px) {
+
 }
 
   

@@ -14,7 +14,14 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-md-6">
+
+<div class="col-md-6 reg-about">
+    <h3>Join <span class="text-info">Modularity</span>Pro</h3>
+    <hr>
+    <p>Be part of a space where modularity and solidarity come together.</p>
+  </div>
+
+  <div class="col-md-6 reg-form">
     @using (Html.BeginForm("Register", "Account", FormMethod.Post))
     {
       @Html.LabelFor(user => user.FirstName, new { @class = "form-label"})
@@ -38,11 +45,7 @@
       <input type="submit" value="Register" class="btn btn-primary"> 
     }
   </div>
-  <div class="col-md-6">
-    <h3>Join <span class="text-info">Modularity</span>Pro</h3>
-    <hr>
-    <p>Be part of a space where modularity and solidarity come together.</p>
-  </div>
+  
     
 
 </div>
