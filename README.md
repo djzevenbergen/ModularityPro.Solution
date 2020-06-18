@@ -1,4 +1,4 @@
-<div style="display: flex; justify-content: center"><img src="https://i.ibb.co/ZMJk3pd/MP-Header.jpg"/></div>
+<div style="max-width: 100%"><img src="https://i.ibb.co/QJHt9cY/MP-Header.jpg"/></div>
 
 ### _Created by Matt Stroud, Dj Sevenbergen, Tyler Bates & KhanSahab Khakwan_
 
