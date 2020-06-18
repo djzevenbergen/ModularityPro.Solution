@@ -646,7 +646,12 @@ main {
   {
     left: 0px;
   }
-
+  #localVideo{
+    float: none;
+    width: 100vw;
+    height: auto;
+    margin: 0;
+  }
   .top-align {
     display:flex;
     flex-direction: row;
