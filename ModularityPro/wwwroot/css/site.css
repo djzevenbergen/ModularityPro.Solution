@@ -32,7 +32,7 @@ html {
 
 .avatar
 {
-  border: solid 4px black; 
+  border: solid 2px black; 
   width: 50px;
   height: 50px;
   float: left;
@@ -102,7 +102,7 @@ textarea {
 }
 
 .home-post-form {
-  width: 50%;
+  width: 99%;
   margin: 0 auto;
 }
 .home-post-avatar {
@@ -111,6 +111,16 @@ textarea {
 
 .home-post-container {
   margin: 0 auto;
+}
+
+.post-btn{
+  width: 100%;
+  text-align: center;
+  margin: 0 auto;
+}
+
+#post-head{
+  text-align: center;
 }
 
 .card-content {
@@ -170,6 +180,8 @@ body {
   /* Set the fixed height of the footer here */
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
+  z-index: 1;
+  background-color: white;
 }
 form.search input[type=text] {
   padding: 6px;
@@ -736,11 +748,6 @@ main {
   width: 75% !important;
 }
 
-/* .popup-box
-{
-    height: 100%;
-    overflow-y: auto;
-} */
 /*===================================================================================================*/
 
 .alert-area {
@@ -931,11 +938,57 @@ video {
 @media only screen and (max-width: 600px) {
   .chat-box {
     background-color: #EEEEEE;
-    width: relative;
+    width: 90vw;
     position: fixed;
-    bottom: 10%;
+    bottom: 12%;
     font-size: relative;
     top: 20%;
+    left: 4%;
+  }
+  .chat-form{
+    white-space: nowrap;
+    flex-wrap: nowrap;
+    float: left;
+  }
+  
+  #chat-form-submit{
+    float: right;
+  }
+
+  .home-post-form{
+    width: 80vw;
+  }
+
+  .post-btn{
+    width: 80vw;
+  }
+
+  .btn-post{
+    width: 100%;
+  }
+
+  .btn-edit{
+    width: 100%;
+  }
+
+  .footer {
+    display: none;
+  }
+
+  .prof-btn{
+    width: 10vw;
+    font-size: 30px;
+    padding: 2px;
+    line-height: 0px;
+  }
+
+  .prof-edit-btn{
+    width: 60vw;
+  }
+
+  .frand{
+    left: 15%;
+    width: 30vw;
   }
 }
 

@@ -282,7 +282,7 @@ function register_popup(id, name) {
   element = element + '<div class="popup-head">';
   element = element + '<div class="popup-head-left">' + name + '</div>';
   element = element + '<div class="popup-head-right"><a href="javascript:close_popup(\'' + id + '\');">&#10005;</a></div>';
-  element = element + '<div style="clear: both"></div></div><div class="popup-messages"></div><div class="chat-controls">';
+  element = element + '<div style="clear: both"></div></div><div class="popup-messages">Spooked ya!</div><div class="chat-controls">';
   element = element + '<input type="text" class="form-control-chat"><button class="btn btn-primary send-message">Send</button></div></div>';
 
   document.getElementsByTagName("body")[0].innerHTML = document.getElementsByTagName("body")[0].innerHTML + element;
