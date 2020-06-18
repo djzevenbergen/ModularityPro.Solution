@@ -104,9 +104,9 @@ dotnet ef database update
 ### Video Call
 
 ModularityPro features video conference rooms allowing you to invite friends to join you in face to face connections!
-Rooms are accessible from the top navigation bar and display a list of your friends. Choose one from the list and they are sent an alert with a designated url. They simply enter that url into their browswer to join your room.
+Rooms are accessible from the top navigation bar and display a list of your friends. Choose one from the list and they are sent an alert with a designated url. They simply enter that url into their browser to join your room.
 
-<img src="">
+<img src="https://media.giphy.com/media/j5bds4FBI9RZrLXO4E/giphy.gif"/>
 
 </div>
 
