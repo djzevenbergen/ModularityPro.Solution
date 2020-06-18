@@ -77,6 +77,8 @@ namespace ModularityPro
 
     public void Configure(IApplicationBuilder app, ModularityProContext context)
     {
+
+      context.Database.Migrate();
       app.UseStaticFiles();
 
       app.UseDeveloperExceptionPage();
@@ -85,7 +87,6 @@ namespace ModularityPro
 
       app.UseSession();
 
-      context.Database.Migrate();
 
       app.UseMvc(routes =>
       {

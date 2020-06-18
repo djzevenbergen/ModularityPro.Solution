@@ -12,7 +12,7 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: secret
       MYSQL_DATABASE: modularity
-      MYSQL_USER: dbuser
+      MYSQL_USER: root
       MYSQL_TCP_PORT: 3306
 
   mvc:
@@ -27,6 +27,6 @@ services:
     environment:
       - DBHOST=db
       - DBPORT=3306
-      - DBUSER=dbuser
+      - DBUSER=root
       - DBPASSWORD=secret
       - ASPNETCORE_ENVIRONMENT=Development
