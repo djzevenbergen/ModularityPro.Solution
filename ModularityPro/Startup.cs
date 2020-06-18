@@ -85,7 +85,7 @@ namespace ModularityPro
 
       app.UseSession();
 
-      context.Database.Migrate();
+      //context.Database.Migrate();
 
       app.UseMvc(routes =>
       {
