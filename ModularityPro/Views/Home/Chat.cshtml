@@ -2,7 +2,7 @@
   Layout = "_Layout";
 }
 
-  @* ViewBag.ToUser *@
+  @* ViewBag.ToUser
 <div class="container">
     <div class="row pt-3">
         <div class="chat-main">
@@ -56,7 +56,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> *@
 
 
 @* <div class="row">
@@ -80,3 +80,42 @@
     </div>
   </div>
 </div> *@
+
+<div class="row">
+  <div class="col-md-12">
+    <div class="card chat-box">
+      <div class="card-header bg-primary">
+        <i class="fa fa-comments" aria-hidden="true"></i> Chatting with @ViewBag.ToUser.FirstName @ViewBag.ToUser.LastName
+      </div>
+      <div class="chat-messages-area">
+        @if(ViewBag.Messages != null && ViewBag.Messages.Count > 0)
+        {
+          @foreach(Message message in ViewBag.Messages)
+          {
+            @if(message.Content.Contains($"{ViewBag.User.FirstName} {ViewBag.User.LastName}"))
+            {
+              <span class="chat-message chat-msg-sent">@message.Content</span><br><br>
+            }
+            else
+            {
+              <span class="chat-message chat-msg-received">@message.Content</span><br><br>
+            }
+            @* <span class="chat-message">@message.Content</span><br> *@
+          }
+        }
+        <script>
+          $(".chat-messages-area").animate({ scrollTop: $(".chat-messages-area")[0].scrollHeight }, 100);
+        </script>
+      </div>
+      <hr>
+      <div class="chat-message-input">
+        <form class="form-inline chat-form">
+          <input type="hidden" id="chat-form-from" value="@User.Identity.Name.ToString()">
+          <input type="hidden" id="chat-form-from-realname" value="@ViewBag.User.FirstName @ViewBag.User.LastName">
+          <input type="text" class="form-control chat-input" id="chat-form-message">
+          <input type="submit" class="btn btn-primary" id="chat-form-submit" value="Send">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
