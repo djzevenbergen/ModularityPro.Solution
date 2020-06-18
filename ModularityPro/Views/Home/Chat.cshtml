@@ -2,16 +2,81 @@
   Layout = "_Layout";
 }
 
-<div class="row">
+  @* ViewBag.ToUser *@
+<div class="container">
+    <div class="row pt-3">
+        <div class="chat-main">
+            <div class="col-md-12 chat-header rounded-top bg-primary text-white">
+                <div class="row">
+                    <div class="col-md-6 username pl-2">
+                        <i class="fa fa-circle text-success" aria-hidden="true"></i>
+                        <h6 class="m-0">Chat Hub with @ViewBag.ToUser</h6>
+                    </div>
+                    <div class="col-md-6 options text-right pr-2">
+                      <i class="fa fa-plus mr-2" aria-hidden="true"></i>
+                      <i class="fa fa-video-camera" aria-hidden="true"></i>
+                      <i class="fa fa-circle text-success live-video mr-1" aria-hidden="true"></i>
+                      <i class="fa fa-phone mr-2" aria-hidden="true"></i>
+                      <i class="fa fa-cog mr-2" aria-hidden="true"></i>
+                      <i class="fa fa-times hide-chat-box" aria-hidden="true"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="chat-content">
+              <div class="col-md-12 chats border">
+                <div class="p-0">
+                  @if(ViewBag.Messages != null)
+                  {
+                    @foreach(Message message in ViewBag.Messages)
+                    {
+                      <span class="chat-message">@message.Content</span><br>
+                    }
+                  }
+                </div>
+              </div>
+              <div class="col-md-12 message-box border pl-2 pr-2 border-top-0">
+                <form class="form-inline chat-form">
+                  <input type="hidden" id="chat-form-from" value="@User.Identity.Name.ToString()">
+                  <input type="hidden" id="chat-form-from-realname" value="@ViewBag.User.FirstName @ViewBag.User.LastName">
+                  <input type="text" class="form-control chat-input" id="chat-form-message" placeholder="Type a message...">
+                  <input type="submit" class="btn btn-primary" id="chat-form-submit" value="Send">
+                </form>
+                <div class="tools">
+                    <i class="fa fa-picture-o" aria-hidden="true"></i>
+                    <i class="fa fa-telegram" aria-hidden="true"></i>
+                    <i class="fa fa-bell" aria-hidden="true"></i>
+                    <i class="fa fa-meh-o" aria-hidden="true"></i>
+                    <i class="fa fa-paperclip" aria-hidden="true"></i>
+                    <i class="fa fa-gamepad" aria-hidden="true"></i>
+                    <i class="fa fa-camera" aria-hidden="true"></i>
+                    <i class="fa fa-folder" aria-hidden="true"></i>
+                    <i class="fa fa-thumbs-o-up m-0" aria-hidden="true"></i>
+                </div>
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@* <div class="row">
   <div class="col-md-12">
     <div class="chat-messages-area">
+      @if(ViewBag.Messages != null)
+      {
+        @foreach(Message message in ViewBag.Messages)
+        {
+          <span class="chat-message">@message.Content</span><br>
+        }
+      }
     </div>
     <div class="chat-message-input">
       <form class="form-inline chat-form">
         <input type="hidden" id="chat-form-from" value="@User.Identity.Name.ToString()">
+        <input type="hidden" id="chat-form-from-realname" value="@ViewBag.User.FirstName @ViewBag.User.LastName">
         <input type="text" class="form-control chat-input" id="chat-form-message">
         <input type="submit" class="btn btn-primary" id="chat-form-submit" value="Send">
       </form>
     </div>
   </div>
-</div>
+</div> *@

@@ -31,6 +31,13 @@
                       @Html.ActionLink($"{@post.User.FirstName} {@post.User.LastName}", "Index", "Profile", new {name = @post.User.UserName})
                     </strong>
                     <p>@post.Content</p>
+                    @if (post.User.UserName == User.Identity.Name)
+                    {
+                     <p>@Html.ActionLink("Edit Post", "Edit", new { id = post.PostId })</p>
+                    
+                     <p>@Html.ActionLink("Delete Post", "Delete", new {id = post.PostId})</p>
+                      
+                    }
                   </div>
                 </div>
               </div>

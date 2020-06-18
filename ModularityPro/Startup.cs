@@ -9,6 +9,9 @@ using ModularityPro.Models;
 using ModularityPro.Hubs;
 using Microsoft.AspNetCore.Session;
 using System.Runtime;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ModularityPro
 {
@@ -26,16 +29,31 @@ namespace ModularityPro
 
     public void ConfigureServices(IServiceCollection services)
     {
-      // 
+
+
       services.AddMvc();
+
+
+
+      // var host = Configuration["DBHOST"] ?? "db";
+      // var port = Configuration["DBPORT"] ?? "3306";
+      // var password = Configuration["DBPASSWORD"] ?? "secret";
+
+      services.AddDbContext<ModularityProContext>(options =>
+      {
+        options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]); //$"server={host}; userid=root; pwd={password};" + $"port={port}; database=modularity"
+      });
 
       services.AddEntityFrameworkMySql()
         .AddDbContext<ModularityProContext>(options => options
         .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+      //   options
+      // .UseMySql(Configuration["ConnectionStrings:DefaultConnection"])
+
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
-                .AddEntityFrameworkStores<ModularityProContext>()
-                .AddDefaultTokenProviders();
+      .AddEntityFrameworkStores<ModularityProContext>()
+      .AddDefaultTokenProviders();
 
 
       services.Configure<IdentityOptions>(options =>
@@ -50,16 +68,14 @@ namespace ModularityPro
 
 
       services.AddSignalR();
-
       // services.AddDistributedMemoryCache();
       services.AddMemoryCache();
       // services.AddSingleton<List>();
       services.AddSession();
       // services.AddMemoryCache();
-
     }
 
-    public void Configure(IApplicationBuilder app)
+    public void Configure(IApplicationBuilder app, ModularityProContext context)
     {
       app.UseStaticFiles();
 
@@ -68,6 +84,8 @@ namespace ModularityPro
       app.UseAuthentication();
 
       app.UseSession();
+
+      context.Database.Migrate();
 
       app.UseMvc(routes =>
       {

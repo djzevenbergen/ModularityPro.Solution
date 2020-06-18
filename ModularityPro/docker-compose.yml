@@ -1,0 +1,32 @@
+version: '3'
+
+volumes:
+  datafiles:
+
+services:
+  db:
+    image: mysql:8.0.0
+    volumes:
+      - datafiles:/var/lib/mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_DATABASE: modularity
+      MYSQL_USER: dbuser
+      MYSQL_TCP_PORT: 3306
+
+  mvc:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - db
+    ports:
+      - "8888:80"
+    restart: always
+    environment:
+      - DBHOST=db
+      - DBPORT=3306
+      - DBUSER=dbuser
+      - DBPASSWORD=secret
+      - ASPNETCORE_ENVIRONMENT=Development
