@@ -79,6 +79,7 @@ namespace ModularityPro
     {
 
       context.Database.Migrate();
+
       app.UseStaticFiles();
 
       app.UseDeveloperExceptionPage();
