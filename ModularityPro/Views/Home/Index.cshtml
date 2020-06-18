@@ -10,12 +10,12 @@
     <div class="col-md-12">
       <div class="home-post-container">
         <div class="home-post-form">
-          <h3>What's on your mind?</h3>
+          <h3 id="post-head">What's on your mind?</h3>
           @using (Html.BeginForm("HomePost", "Posts", FormMethod.Post))
           {
             <input type="hidden" name="UserName" id="UserName" value="@User.Identity.Name">
-            <textarea id="Content" name="Content" class="profile-create-post-text"></textarea>
-            <input type="submit" class="btn btn-dark" value="Post">
+            <textarea id="Content" name="Content" class="profile-create-post-text" placeholder="Type something here..."></textarea>
+            <input type="submit" class="btn post-btn btn-dark" value="Post">
           }
         </div>
         <div>
