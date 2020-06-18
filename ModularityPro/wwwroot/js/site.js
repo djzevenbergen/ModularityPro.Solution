@@ -19,7 +19,7 @@ var AlertBox = function (id, option) {
       var alertClose = document.createElement('A');
       var alertClass = this;
       alertContent.classList.add('alert-content');
-      alertContent.innerText = msg;
+      alertContent.innerHTML = msg;
       alertClose.classList.add('alert-close');
       alertClose.setAttribute('href', '#');
       alertBox.classList.add('alert-box');
@@ -104,26 +104,11 @@ $(document).ready(function () {
   "use strict";
 
   const connection = new signalR.HubConnectionBuilder().withUrl("/chatHub").build();
+
   connection.start().then(function () {
   }).catch(function (err) {
     return console.error(err.toString());
   });
-  // async function start() {
-  //   try {
-  //     await connection.start();
-  //     console.log("connected");
-  //   } catch (err) {
-  //     console.log(err);
-  //     setTimeout(() => start(), 5000);
-  //   }
-  // };
-
-  // connection.onclose(async () => {
-  //   await start();
-  // });
-
-  // start();
-
 
   connection.on("AddToChat", (userRealName, userName, userAvatarUrl) => {
     if ($(`#${userName}`).length === 0) {
@@ -153,23 +138,25 @@ $(document).ready(function () {
   // document.getElementById("sendButton").disabled = true;
   connection.on("ReceiveFriendRequest", (user) => {
     if ($(".alert-box").length === 0) {
-      alertbox.show("You received a friend request from " + user);
+      alertbox.show("You received a friend request from " + user + `. <a href="/Friends/Requests">View Now</a>`);
     }
   });
 
   connection.on("ReceiveVideoInvite", (fromUser, inviteUrl) => {
     if ($(".alert-box").length === 0) {
-      alertboxPersistent.show("You received a video call invite from " + fromUser + ": " + inviteUrl);
+      //alertboxPersistent.show("You received a video call invite from " + fromUser + ": " + inviteUrl);
+      alertboxPersistent.show(`You received a video call invite from ${fromUser}: <a href="${inviteUrl}">${inviteUrl}</a>`);
     }
   });
 
-  connection.on("ReceiveMessage", function (user, message) {
+  connection.on("ReceiveMessage", function (user, username, message) {
     var existing = $(".chat-messages-area").html();
     var previous = $(".chat-message").last().text();
     var location = window.location.href;
     var chattingWith = $(".card-header").text();
     if (!location.includes("Chat") && $(".alert-box").length === 0) {
-      alertbox.show("You received a friend message from " + user);
+      //alertbox.show("You received a friend message from " + user);
+      alertbox.show(`You received a friend message from <a href="/Chat/${username}#${username}">${user}</a>`);
     }
     if (message != previous && chattingWith.includes(user)) {
       //$(".chat-messages-area").html(existing + "<span class='chat-message'>" + message + "</span><br>");

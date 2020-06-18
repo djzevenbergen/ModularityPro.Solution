@@ -53,7 +53,7 @@ namespace ModularityPro.Hubs
       storeMessage.Content = newMessage;
       _db.Messages.Add(storeMessage);
       _db.SaveChanges();
-      await Clients.User(toUser.Id.ToString()).SendAsync("ReceiveMessage", $"{fromUser.FirstName} {fromUser.LastName}", newMessage);
+      await Clients.User(toUser.Id.ToString()).SendAsync("ReceiveMessage", $"{fromUser.FirstName} {fromUser.LastName}", fromUser.UserName, newMessage);
     }
 
     public async Task NotifyFriendRequest(string toUserName, string fromUserName)
