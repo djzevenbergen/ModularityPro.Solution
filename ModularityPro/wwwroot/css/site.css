@@ -753,7 +753,7 @@ main {
 .alert-area {
   max-height: 100%;
   position: fixed;
-  bottom: 25px;
+  bottom: 100px;
   left: 20px;
   right: 20px;
 }
@@ -762,10 +762,10 @@ main {
   font-size: 16px;
   color: white;
   background: rgba(0, 0, 0, 0.9);
-  z-index: 5;
+  z-index: 10;
   line-height: 1.3em;
   padding: 10px 15px;
-  height: 100px;
+  height: 100%;
   margin: 5px 10px;
   position: relative;
   border-radius: 5px;
