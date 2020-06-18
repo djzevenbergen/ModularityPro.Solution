@@ -48,16 +48,16 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index" style="white-space: nowrap;"><i class="fa fa-home" aria-hidden="true"></i> Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Video"><i class="fa fa-television" aria-hidden="true"></i> Video Call</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Video" style="white-space: nowrap;"><i class="fa fa-television" aria-hidden="true"></i> Video Call</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="Requests" onclick="viewFriendRequests()"><i class="fa fa-user-circle-o" aria-hidden="true"></i> <span id ="friend-request-header">Requests</span></span></a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Friends" asp-action="Requests" style="white-space: nowrap;" onclick="viewFriendRequests()"><i class="fa fa-user-circle-o" aria-hidden="true"></i> <span id ="friend-request-header">Requests</span></span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search"><i class="fa fa-users" aria-hidden="true"></i> <span id ="friend-request-header">All Users</span></span></a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Search" style="white-space: nowrap;"><i class="fa fa-users" aria-hidden="true"></i> <span id ="friend-request-header">All Users</span></span></a>
                         </li>
                     </ul>
                 </div>
@@ -68,7 +68,7 @@
                     <div>
                         <ul class="navbar-nav flex-grow-1">
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-controller="Profile" asp-action="@User.Identity.Name"><i> <img src = "@layoutUser.AvatarUrl" class="avatar-by-search"> </i> @User.Identity.Name</a>
+                                <a class="nav-link text-dark" style="white-space: nowrap;" asp-controller="Profile" asp-action="@User.Identity.Name"><i> <img src = "@layoutUser.AvatarUrl" class="avatar-by-search"> </i> @User.Identity.Name</a>
                             </li>
                         </ul>
                     </div>
