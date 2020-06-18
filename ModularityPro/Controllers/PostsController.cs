@@ -46,23 +46,6 @@ namespace ModularityPro.Controllers
       return RedirectToAction("Index", "Home");
     }
 
-    [HttpDelete]
-    public ActionResult Delete(int id)
-    {
-      ApplicationUser ThisUser = _db.Users.Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault();
-      Post SpecificPost = _db.Posts.Where(posts => posts.PostId == id).FirstOrDefault();
-      if (SpecificPost.User.Id == ThisUser.Id)
-      {
-        var PostToDelete = _db.Posts.FirstOrDefault(entry => entry.PostId == id);
-        _db.Posts.Remove(PostToDelete);
-        _db.SaveChanges();
-        return RedirectToAction("Index", "Home");
-      }
-      else
-      {
 
-        return RedirectToAction("Index", "Home");
-      }
-    }
   }
 }

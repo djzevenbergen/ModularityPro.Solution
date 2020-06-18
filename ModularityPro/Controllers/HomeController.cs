@@ -120,11 +120,13 @@ namespace ModularityPro.Controllers
     [HttpGet("/Chat/{name}")]
     public ActionResult Chat(string name)
     {
+      ApplicationUser toUser = _db.Users.Where(users => users.UserName == name).FirstOrDefault();
       List<Message> allMessages = _db.Messages.Where(messages => (messages.FromUser.UserName == User.FindFirstValue(ClaimTypes.Name) && messages.ToUser.UserName == name) || (messages.ToUser.UserName == User.FindFirstValue(ClaimTypes.Name) && messages.FromUser.UserName == name)).ToList();
       SortMessages(allMessages, 0, allMessages.Count - 1);
       string myName = User.FindFirstValue(ClaimTypes.Name);
       ApplicationUser thisUser = _db.Users.Where(users => users.UserName == myName).FirstOrDefault();
       ViewBag.User = thisUser;
+      ViewBag.ToUser = toUser;
       ViewBag.Friends = _db.Friends.Where(user => user.User.UserName == myName).Include(user => user.UserFriend).ToList();
       ViewBag.Messages = allMessages;
       List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
@@ -203,6 +205,7 @@ namespace ModularityPro.Controllers
         var usersMinus = model.Where(m => m.UserName != myUserName);
         matchesUser = usersMinus.ToList();
       }
+
       ViewBag.SearchString = search;
       List<Friend> allFriends = _db.Friends.Where(users => users.User.Id == User.FindFirstValue(ClaimTypes.NameIdentifier) && users.Accepted == true).Include(users => users.UserFriend).ToList();
       ViewBag.AllFriends = allFriends;
@@ -221,7 +224,6 @@ namespace ModularityPro.Controllers
     {
       return View();
     }
-
     public ActionResult Edit(int id)
     {
       Post EditablePost = _db.Posts.FirstOrDefault(entry => entry.PostId == id);
@@ -229,19 +231,34 @@ namespace ModularityPro.Controllers
     }
 
 
-    [HttpPut]
-    public void Edit(int id, [FromBody] Post post)
+    [HttpPost]
+    public ActionResult Editing(Post post)
+    {
+      _db.Entry(post).State = EntityState.Modified;
+      _db.SaveChanges();
+      return RedirectToAction("Index", "Home");
+    }
+
+
+
+    public ActionResult Delete(int id)
     {
       ApplicationUser ThisUser = _db.Users.Where(user => user.Id == User.FindFirstValue(ClaimTypes.NameIdentifier)).FirstOrDefault();
       Post SpecificPost = _db.Posts.Where(posts => posts.PostId == id).FirstOrDefault();
       if (SpecificPost.User.Id == ThisUser.Id)
       {
-        post.PostId = id;
-        _db.Entry(post).State = EntityState.Modified;
+        var PostToDelete = _db.Posts.FirstOrDefault(entry => entry.PostId == id);
+        _db.Posts.Remove(PostToDelete);
         _db.SaveChanges();
+        return RedirectToAction("Index", "Home");
       }
+      else
+      {
 
+        return RedirectToAction("Index", "Home");
+      }
     }
+
   }
 }
 

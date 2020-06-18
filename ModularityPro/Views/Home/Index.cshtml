@@ -33,14 +33,10 @@
                     <p>@post.Content</p>
                     @if (post.User.UserName == User.Identity.Name)
                     {
-                     <p>@Html.ActionLink("Edit This Post", "Edit", new { id = post.PostId })</p>
+                     <p>@Html.ActionLink("Edit Post", "Edit", new { id = post.PostId })</p>
                     
-                     <p>@Html.ActionLink("Want to Delete your post?", "Delete")</p>
-                      @using (Html.BeginForm("Delete", "Posts"))
-                      {
-                        @Html.Hidden("postId", post.PostId)
-                        <input type="submit" value="Delete"/>
-                      }
+                     <p>@Html.ActionLink("Delete Post", "Delete", new {id = post.PostId})</p>
+                      
                     }
                   </div>
                 </div>

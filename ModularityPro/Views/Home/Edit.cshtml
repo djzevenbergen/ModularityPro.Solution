@@ -4,19 +4,46 @@
 
 @model ModularityPro.Models.Post
 
+<div class="row">
+  <div class="col-md-12">
+    <div class="edit-post-container">
+      <div class="edit-post-form">
+        <h3>Let's edit this post</h3>
+
+          @using (Html.BeginForm("Editing", "Home"))
+          {
+              @Html.HiddenFor(model => model.PostId)
+              @Html.HiddenFor(model => model.User)
+              @* @Html.LabelFor(model => model.Content) *@
+              @* @Html.EditorFor(model => model.Content) *@
+              
+              <textarea id="Content" name="Content" class="profile-edit-post-text" placeholder="@Html.DisplayFor(model => model.Content)"></textarea>
+              <input type="submit" class="btn btn-dark" value="Save">
+          }
+      </div>
+      <div>
+    </div>
+  </div>
+<br>
+<br>
+<p>@Html.ActionLink("Back to Posts", "Index")</p>
+
+@* @{
+  Layout = "_Layout";
+}
+
+@model ModularityPro.Models.Post
+
 <h2>Edit</h2>
 
 <h4>Edit Your contents: @Html.DisplayFor(model => model.Content)</h4>
 
 @using (Html.BeginForm())
 {
-    @Html.HiddenFor(model => model.PostId)
-
-    @Html.LabelFor(model => model.Content)
-    @Html.EditorFor(model => model.Content)
-
+   
+   
 
     <input type="submit" value="Save" />
 }
 
-<p>@Html.ActionLink("Back to Posts", "Index")</p>
+<p>@Html.ActionLink("Back to Posts", "Index")</p> *@

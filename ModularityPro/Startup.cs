@@ -9,6 +9,9 @@ using ModularityPro.Models;
 using ModularityPro.Hubs;
 using Microsoft.AspNetCore.Session;
 using System.Runtime;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace ModularityPro
 {
@@ -26,21 +29,26 @@ namespace ModularityPro
 
     public void ConfigureServices(IServiceCollection services)
     {
-      // 
+
+
       services.AddMvc();
 
 
 
-      // var host = Configuration["DBHOST"] ?? "localhost";
+      // var host = Configuration["DBHOST"] ?? "db";
       // var port = Configuration["DBPORT"] ?? "3306";
       // var password = Configuration["DBPASSWORD"] ?? "secret";
 
+      services.AddDbContext<ModularityProContext>(options =>
+      {
+        options.UseMySql(Configuration["ConnectionStrings:DefaultConnection"]); //$"server={host}; userid=root; pwd={password};" + $"port={port}; database=modularity"
+      });
 
       services.AddEntityFrameworkMySql()
-        .AddDbContext<ModularityProContext>(options =>
-
-        options
-      .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+        .AddDbContext<ModularityProContext>(options => options
+        .UseMySql(Configuration["ConnectionStrings:DefaultConnection"]));
+      //   options
+      // .UseMySql(Configuration["ConnectionStrings:DefaultConnection"])
 
 
       services.AddIdentity<ApplicationUser, IdentityRole>()
