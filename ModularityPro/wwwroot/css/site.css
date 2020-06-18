@@ -898,11 +898,8 @@ video {
     position: fixed;
     /* width: 270px; */
     width: 40%;
-    height: 60%;
-    bottom: 0;
+    bottom: 7%;
     /* right: 200px; */
-    /* display: flex;
-    align-items: center; */
   }
   .chat-header{
     background: #4267B2;
@@ -971,9 +968,7 @@ video {
 @media only screen and (max-width: 600px) {
   .chat-main{
     position: fixed;
-    width: 50%;
+    width: 70%;
     bottom: 7%;
-    /* display: flex;
-    align-items: center; */
   }
 }
