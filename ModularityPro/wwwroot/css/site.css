@@ -692,6 +692,13 @@ main {
     border: 1px solid rgba(29, 49, 91, .3);
 }
 
+#localVideo{
+  float: none;
+  width: 100vw;
+  height: auto;
+  margin: 0;
+}
+
 .popup-box .popup-head
 {
     /* background-color: #6d84b4; */
