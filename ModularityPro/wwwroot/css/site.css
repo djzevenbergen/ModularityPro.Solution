@@ -729,7 +729,9 @@ main {
     float: right;
     opacity: 0.5;
 }
-
+.btn-post{
+  width: 100%;
+}
 .popup-box .popup-head .popup-head-right a
 {
     text-decoration: none;
